@@ -49,3 +49,8 @@ h1 + h2 + span {
   padding: 8px 4px 16px;
   margin-bottom: 8px;
 }
+
+
+.input-amount {
+  flex: 0.1 !important;
+}

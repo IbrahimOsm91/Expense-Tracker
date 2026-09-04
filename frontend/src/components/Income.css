@@ -21,6 +21,16 @@
   color: #000;
 }
 
+.add-income-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-income-form div {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
 
 
 .add-income-form input,

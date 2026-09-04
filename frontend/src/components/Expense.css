@@ -21,6 +21,17 @@
 }
 
 
+.add-expense-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-expense-form div {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
 .add-expense-form input,
 .add-expense-form select {
   flex: 1;
