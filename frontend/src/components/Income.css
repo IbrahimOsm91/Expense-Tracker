@@ -1,0 +1,85 @@
+
+/* ---- Income Container ---- */
+.income-container {
+  max-width: 700px;
+  margin: 24px auto;
+}
+
+.income-header {
+  display: flex;
+  align-items: center;
+}
+
+.income-header h2 {
+  color: #38d9a9;
+}
+
+.income-list {
+  border: 2px solid #38d9a9;
+  border-radius: 12px;
+  padding: 12px;
+  color: #000;
+}
+
+
+
+.add-income-form input,
+.add-income-form select {
+  flex: 1;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border: 2px solid #38d9a9;
+  border-radius: 8px;
+  background-color: #faf6f0;
+  color: #000;
+}
+
+.add-income-form input:focus,
+.add-income-form select:focus {
+  outline: none;
+  border-color: #12b886;
+}
+
+
+
+.add-income-form button {
+  background-color: #38d9a9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.add-income-form button:hover {
+  background-color: #12b886;
+}
+
+.income-list-header,
+.income-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 8px 4px;
+  color: #000;
+}
+
+.income-list-header {
+  font-weight: bold;
+}
+
+.income-description {
+  text-align: left;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.income-amount,
+.income-time,
+.income-category,
+.income-date {
+  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
