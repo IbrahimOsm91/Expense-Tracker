@@ -1,0 +1,79 @@
+.pie-charts-container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+
+.pie-chart-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 7%;
+}
+
+
+
+
+.pie-chart-header {
+  font-size: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.pie-chart-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10%;
+}
+
+
+
+
+.pie-chart-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48%;
+}
+
+
+
+
+.pie-chart-bottom a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 4px 12px;
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pie-chart-bottom a:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+
+
+.transaction-brief {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 5%;
+  font-weight: 700;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
-import { ItemComponent } from './ItemComponent'
+import { ItemComponent } from '../ItemComponent/ItemComponent'
 import './Expense.css'
 import './Income.css'
 

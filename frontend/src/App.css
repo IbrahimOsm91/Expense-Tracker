@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -8,35 +7,48 @@
 body {
   margin: 0;
   background-color: #f2ebe1;
-  font-family: "Architects Daughter", cursive;
+  font-family: "Exo 2", sans-serif;
+}
+
+.body-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px 40px;
 }
 
 /* ---- H1 ---- */
 h1 {
   color: #000;
-  border: 2px solid #000;
   border-radius: 16px;
-  padding: 16px 32px;
-  width: fit-content;
-  margin: 24px auto;
-  text-align: center;
-  font-size: 2.5rem;
+  text-align: flex-start;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 /* ---- Net Balance ---- */
-h1 + h2 {
+h1+h2 {
   text-align: center;
   color: #38d9a9;
   margin-bottom: 4px;
 }
 
-h1 + h2 + span {
+h1+h2+span {
   display: block;
   text-align: center;
   color: #38d9a9;
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 24px;
+}
+
+
+h2 {
+  font-size: 3rem;
+  margin: 0;
 }
 
 
@@ -54,3 +66,13 @@ h1 + h2 + span {
 .input-amount {
   flex: 0.1 !important;
 }
+/**/
+
+.top-row {
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  width: 100%;
+  height: 6%;
+}
+
