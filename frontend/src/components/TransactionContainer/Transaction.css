@@ -1,0 +1,150 @@
+.transaction-container {
+  --accent-color: #f783ac;
+  --accent-hover-color: #e64980;
+  max-width: 50%;
+  margin: 24px 50px;
+}
+
+.transaction-container[data-type="expense"] {
+  --accent-color: #f783ac;
+  --accent-hover-color: #e64980;
+}
+
+.transaction-container[data-type="income"] {
+  --accent-color: #38d9a9;
+  --accent-hover-color: #12b886;
+}
+
+.transaction-header {
+  display: flex;
+  align-items: center;
+}
+
+.transaction-header h2 {
+  color: var(--accent-color);
+}
+
+.transaction-list {
+  border: 2px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 12px;
+  color: #000;
+}
+
+.add-transaction-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-transaction-form div {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.add-transaction-form input {
+  flex: 1;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border: 2px solid var(--accent-color);
+  border-radius: 8px;
+  background-color: #faf6f0;
+  color: #000;
+}
+
+.add-transaction-form input:focus {
+  outline: none;
+  border-color: var(--accent-hover-color);
+}
+
+.add-transaction-form button {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.add-transaction-form button:hover {
+  background-color: var(--accent-hover-color);
+}
+
+.transaction-list-header,
+.transaction-item {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr)) 58px;
+  padding: 8px 4px;
+  color: #000;
+}
+
+.transaction-list-header {
+  font-weight: bold;
+}
+
+.transaction-description {
+  text-align: left;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.transaction-item>span {
+  border: 1px solid transparent;
+  border-radius: 7px;
+  padding: 2px 4px;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.transaction-item>span:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-color) 18%, transparent);
+  transform: scale(1.03);
+}
+
+.transaction-edit-btn {
+  align-self: center;
+  margin-left: 12px;
+  padding: 4px 8px;
+  border: 1px solid var(--accent-color);
+  border-radius: 5px;
+  background-color: transparent;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.transaction-edit-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.transaction-edit-actions .transaction-edit-btn {
+  width: 24px;
+  height: 24px;
+  margin-left: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.transaction-cancel-btn {
+  color: var(--accent-hover-color);
+}
+
+.transaction-edit-btn:hover {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.transaction-amount,
+.transaction-time,
+.transaction-category,
+.transaction-date {
+  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

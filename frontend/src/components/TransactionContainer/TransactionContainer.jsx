@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import { ItemComponent } from '../ItemComponent/ItemComponent'
-import './Expense.css'
-import './Income.css'
+import './Transaction.css'
 
 
 
@@ -28,39 +27,51 @@ export function TransactionContainer({
   }
 
 
+
+
+  function getOrCreateCategoryId() {
+    const categoryName = newTransaction.category.trim()
+
+    // if the category input is empty, return the "Other" category ID.
+    if (categoryName === '') { return '3' }
+
+    const existingCategory = categories.find(
+      cat => cat.name.toLowerCase() === categoryName.toLowerCase()
+    )
+    if (existingCategory) { return existingCategory.id }
+
+    const newCategory = {
+      id: crypto.randomUUID(),
+      name: categoryName
+    }
+
+    setCategories(previousCategories => [
+      ...previousCategories,
+      newCategory
+    ])
+
+    return newCategory.id
+  }
+
+
+
+
   function addTransaction() {
     if (newTransaction.amount === '') {
       alert('Please fill the informations!')
       return
     }
 
-    const newCategory = {
-      id: crypto.randomUUID(),
-      name: newTransaction.category
-    }
-
-    // If there is no same category in database, create a new category.
-    if (!categories.some(
-      cat => cat.name.toLowerCase() === newCategory.name.toLocaleLowerCase()
-    )) {
-      setCategories([
-        ...categories,
-        newCategory
-      ])
-    }
-
-    const existingCategory = categories.find(
-      cat => cat.name.toLowerCase() === newCategory.name.toLocaleLowerCase()
-    )
+    const selectedCategoryId = getOrCreateCategoryId()
 
 
     setItems([
       {
         description: newTransaction.description || 'Undefined',
         amount: Number(newTransaction.amount) || 0,
-        categoryId: existingCategory?.id || newCategory.id || 'undefined',
+        categoryId: selectedCategoryId || 'undefined',
         time: newTransaction.time === ''
-          ? dayjs().format('h:mm A')
+          ? dayjs().format('HH:mm')
           : newTransaction.time,
         date: newTransaction.date === ''
           ? dayjs().format('YYYY-MM-DD')
@@ -82,12 +93,12 @@ export function TransactionContainer({
 
 
   return (
-    <div className={`${type}-container`}>
-      <div className={`${type}-header`}>
+    <div className="transaction-container" data-type={type}>
+      <div className="transaction-header">
         <h2>{title}: ${total}</h2>
       </div>
 
-      <div className={`add-item-form add-${type}-form`}>
+      <div className="add-item-form add-transaction-form">
 
         <div>
           <input type="text"
@@ -129,18 +140,23 @@ export function TransactionContainer({
         </div>
       </div>
 
-      <div className={`${type}-list`}>
-        <div className={`${type}-list-header`}>
-          <span className={`${type}-description`}>Description</span>
-          <span className={`${type}-amount`}>Amount</span>
-          <span className={`${type}-category`}>Category</span>
-          <span className={`${type}-time`}>Time</span>
-          <span className={`${type}-date`}>Date</span>
+      <div className="transaction-list">
+        <div className="transaction-list-header">
+          <span className="transaction-description">Description</span>
+          <span className="transaction-amount">Amount</span>
+          <span className="transaction-category">Category</span>
+          <span className="transaction-time">Time</span>
+          <span className="transaction-date">Date</span>
         </div>
 
         {items.map(item => {
           return (
-            <ItemComponent key={item.id} {...item} type={type} categories={categories} />
+            <ItemComponent key={item.id}
+              {...item}
+              type={type}
+              categories={categories}
+              setCategories={setCategories}
+              setItems={setItems} />
           )
         })}
       </div>

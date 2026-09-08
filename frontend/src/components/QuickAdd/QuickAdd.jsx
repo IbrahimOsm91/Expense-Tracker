@@ -23,31 +23,32 @@ export function QuickAdd({quickAddType, setQuickAddType, categories, setCategori
       return
     }
 
-    const newCategory = {
-      id: crypto.randomUUID(),
-      name: newTransaction.category
-    }
+    const categoryName = newTransaction.category.trim()
+    const existingCategory = categories.find(
+      category => category.name.toLowerCase() === categoryName.toLowerCase()
+    )
+    let selectedCategoryId = existingCategory?.id || '3'
 
-    // If there is no same category in database, create a new category.
-    if (!categories.some(
-      cat => cat.name.toLowerCase() === newCategory.name.toLocaleLowerCase()
-    )) {
-      setCategories([
-        ...categories,
+    if (categoryName !== '' && !existingCategory) {
+      const newCategory = {
+        id: crypto.randomUUID(),
+        name: categoryName
+      }
+
+      setCategories(previousCategories => [
+        ...previousCategories,
         newCategory
       ])
-    }
 
-    const existingCategory = categories.find(
-      cat => cat.name.toLowerCase() === newCategory.name.toLocaleLowerCase()
-    )
+      selectedCategoryId = newCategory.id
+    }
 
 
     setItems([
       {
         description: newTransaction.description || 'Undefined',
         amount: Number(newTransaction.amount) || 0,
-        categoryId: existingCategory?.id || newCategory.id || 'undefined',
+        categoryId: selectedCategoryId,
         time: newTransaction.time === ''
           ? dayjs().format('HH:mm')
           : newTransaction.time,

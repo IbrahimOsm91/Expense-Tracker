@@ -5,24 +5,14 @@ import { PieChartComponent } from '../components/PieChartComponent/PieChartCompo
 
 
 
-export function HomePage() {
-  const [expenses, setExpenses] = useState(JSON.parse(localStorage.getItem('expense')) || [])
-  const [incomes, setIncomes] = useState(JSON.parse(localStorage.getItem('income')) || [])
-
-  const [expenseCategories, setExpenseCategories] = useState(
-    JSON.parse(localStorage.getItem('expenseCategories'))
-    || [{ id: '1', name: 'Market' }, { id: '2', name: 'Rent' }, { id: '3', name: 'Other' }]
-  )
-
-  const [incomeCategories, setIncomeCategories] = useState(
-    JSON.parse(localStorage.getItem('incomeCategories'))
-    || [{ id: '1', name: 'Salary' }, { id: '2', name: 'Freelance' }, { id: '3', name: 'Other' }]
-  )
-
+export function HomePage({
+  expenses, incomes,
+  expenseCategories, incomeCategories,
+  setExpenses, setIncomes,
+  setExpenseCategories, setIncomeCategories,
+  totalExpenses, totalIncomes
+}) {
   const [quickAddType, setQuickAddType] = useState('expense')
-
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
-  const totalIncomes = incomes.reduce((acc, income) => acc + income.amount, 0)
   const netBalance = totalIncomes - totalExpenses
 
 
@@ -49,13 +39,15 @@ export function HomePage() {
         <PieChartComponent
           total={totalExpenses}
           items={expenses}
-          type='Expense'
+          type='expense'
+          title='Expense'
           categories={expenseCategories} />
 
         <PieChartComponent
           total={totalIncomes}
           items={incomes}
-          type='Income'
+          type='income'
+          title='Income'
           categories={incomeCategories} />
       </div>
     </div>

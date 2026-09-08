@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const COLORS = ['#6C5CE7', '#00B894', '#FD79A8', '#636E72', '#0984E3', '#FDCB6E', '#E17055', '#00CEC9']
 
 export function PieChartComponent({
-  total, categories, items, type
+  total, categories, items, type, title
 }) {
   const [pieData, setPieData] = useState([])
 
@@ -23,6 +23,7 @@ export function PieChartComponent({
 
     items.forEach(item => {
       const foundCategory = categoryFinder(item.categoryId)
+      if (!foundCategory) {return console.log('Category could not find!')}
       categoryTotals[foundCategory.name] += item.amount
     })
 
@@ -49,18 +50,18 @@ export function PieChartComponent({
       setPieData(chartData)
     }
 
-  }, [items])
+  }, [items, categories])
 
   return (
     <div className="pie-chart-container">
       <span className='pie-chart-header'
         style={{
           color:
-            type === 'Expense'
+            type === 'expense'
               ? '#e64980'
               : '#38d9a9'
         }}>
-        {type}s: ${total}</span>
+        {title}s: ${total}</span>
       <div className='pie-chart-body'>
         <ResponsiveContainer width="50%" height="100%">
           <PieChart>
@@ -92,8 +93,8 @@ export function PieChartComponent({
           ))}
         </div>
       </div>
-      <div className='pie-chart-bottom' data-section={type === 'Expense' ? 'expense' : 'income'}>
-        <Link to="/expense-history">{type} History</Link>
+      <div className='pie-chart-bottom' data-section={type === 'expense' ? 'expense' : 'income'}>
+        <Link to={`/history/${type}`}>{title} History</Link>
       </div>
     </div >
   )
