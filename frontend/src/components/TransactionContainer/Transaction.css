@@ -82,6 +82,7 @@
 
 .transaction-list-header {
   font-weight: bold;
+  border-bottom: 3px dashed var(--accent-color);
 }
 
 .transaction-description {

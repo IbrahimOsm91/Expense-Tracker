@@ -53,7 +53,7 @@ export function PieChartComponent({
   }, [items, categories])
 
   return (
-    <div className="pie-chart-container">
+    <div className="pie-chart-container" data-section={type}>
       <span className='pie-chart-header'
         style={{
           color:
@@ -63,7 +63,7 @@ export function PieChartComponent({
         }}>
         {title}s: ${total}</span>
       <div className='pie-chart-body'>
-        <ResponsiveContainer width="50%" height="100%">
+        <ResponsiveContainer width="70%" height="100%">
           <PieChart>
             <Pie
               data={pieData.length === 0 ? [{ name: 'Empty', value: 1 }] : pieData}

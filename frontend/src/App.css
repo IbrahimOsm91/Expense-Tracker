@@ -6,7 +6,6 @@
 
 body {
   margin: 0;
-  background-color: #f2ebe1;
   font-family: "Exo 2", sans-serif;
 }
 
@@ -18,6 +17,7 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px 40px;
+  background-color: #F8FAFC;
 }
 
 /* ---- H1 ---- */
