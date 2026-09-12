@@ -1,8 +1,9 @@
 .transaction-container {
-  --accent-color: #f783ac;
-  --accent-hover-color: #e64980;
-  max-width: 50%;
+  width: 70%;
   margin: 24px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .transaction-container[data-type="expense"] {
@@ -18,10 +19,25 @@
 .transaction-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .transaction-header h2 {
   color: var(--accent-color);
+}
+
+.transaction-header button {
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.transaction-header button:hover {
+  background-color: var(--accent-hover-color);
 }
 
 .transaction-list {
@@ -148,4 +164,26 @@
   text-align: center;
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-filters button {
+  background-color: #EEF2FF;
+  color: #6366F1;
+  border: 1px solid #6366F1;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.active-filters button:hover {
+  background-color: #6366F1;
+  color: #fff;
 }

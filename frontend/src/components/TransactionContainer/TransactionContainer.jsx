@@ -15,8 +15,11 @@ export function TransactionContainer({
   total,
   categories,
   setCategories,
+  filters,
+  selectedCategories
 }) {
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
+  const [isFormVisible, setIsFormVisible] = useState(false)
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -91,53 +94,64 @@ export function TransactionContainer({
     setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
   }, [items])
 
-
+  
   return (
     <div className="transaction-container" data-type={type}>
       <div className="transaction-header">
         <h2>{title}: ${total}</h2>
+        <button onClick={() => { setIsFormVisible(!isFormVisible) }}>Add new {type} ▼</button>
       </div>
 
-      <div className="add-item-form add-transaction-form">
+      {isFormVisible &&
+        <div className="add-item-form add-transaction-form">
 
-        <div>
-          <input type="text"
-            name="description"
-            placeholder="Description"
-            value={newTransaction.description || ''}
-            onChange={handleChange} />
+          <div>
+            <input type="text"
+              name="description"
+              placeholder="Description"
+              value={newTransaction.description || ''}
+              onChange={handleChange} />
 
-          <input type="number"
-            className='input-amount'
-            name="amount"
-            placeholder="Amount"
-            value={newTransaction.amount || ''}
-            onChange={handleChange} />
-        </div>
+            <input type="number"
+              className='input-amount'
+              name="amount"
+              placeholder="Amount"
+              value={newTransaction.amount || ''}
+              onChange={handleChange} />
+          </div>
 
-        <div>
-          <input className='category-input' list={`${type}-categories`} name="category" value={newTransaction.category}
-            placeholder='Category'
-            onChange={handleChange} />
+          <div>
+            <input className='category-input' list={`${type}-categories`} name="category" value={newTransaction.category}
+              placeholder='Category'
+              onChange={handleChange} />
 
-          <datalist id={`${type}-categories`}>
-            {categories.map(cat => {
-              return <option key={cat.id} value={cat.name} />
-            })}
-          </datalist>
+            <datalist id={`${type}-categories`}>
+              {categories.map(cat => {
+                return <option key={cat.id} value={cat.name} />
+              })}
+            </datalist>
 
-          <input type="time"
-            name='time'
-            value={newTransaction.time}
-            onChange={handleChange} />
+            <input type="time"
+              name='time'
+              value={newTransaction.time}
+              onChange={handleChange} />
 
-          <input type="date"
-            name='date'
-            value={newTransaction.date}
-            onChange={handleChange} />
+            <input type="date"
+              name='date'
+              value={newTransaction.date}
+              onChange={handleChange} />
 
-          <button onClick={addTransaction}>Confirm</button>
-        </div>
+            <button onClick={addTransaction}>Confirm</button>
+          </div>
+        </div>}
+
+
+      <div className='active-filters'>
+        {selectedCategories.map(cat => (
+          cat.isChecked && (
+            <button key={cat.name}>{cat.name} 🗙</button>
+          )
+        ))}
       </div>
 
       <div className="transaction-list">
