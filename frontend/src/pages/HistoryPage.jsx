@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useState } from "react"
-import { TransactionContainer } from "../components/TransactionContainer/TransactionContainer"
+import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import './HistoryPage.css'
 
@@ -45,7 +45,8 @@ export function HistoryPage({
         categories={categories}
         filters={filters}
         setFilters={setFilters}
-        setSelectedCategories={setSelectedCategories} />
+        setSelectedCategories={setSelectedCategories}
+        selectedCategories={selectedCategories} />
 
 
       <TransactionContainer
@@ -58,6 +59,7 @@ export function HistoryPage({
         setCategories={setCategories}
         filters={filters}
         selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
       />
     </div>
   )

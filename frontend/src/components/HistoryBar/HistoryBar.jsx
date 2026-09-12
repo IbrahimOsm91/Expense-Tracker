@@ -2,7 +2,7 @@ import './HistoryBar.css'
 
 
 export function HistoryBar(
-  { categories, setSelectedCategories, filters, setFilters }
+  { categories, selectedCategories, setSelectedCategories, filters, setFilters }
 ) {
 
 
@@ -25,7 +25,7 @@ export function HistoryBar(
     ))
   }
 
-
+console.log(selectedCategories)
 
 
   return (
@@ -64,6 +64,7 @@ export function HistoryBar(
             {categories.map(category => (
               <div key={category.name}>
                 <input type='checkbox'
+                  checked={selectedCategories.find(cat => cat.name === category.name)?.isChecked || false}
                   onChange={(event) => handleCategoryChange(category.name, event.target.checked)} />
                 {category.name}
               </div>
