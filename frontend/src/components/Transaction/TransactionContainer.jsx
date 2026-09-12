@@ -12,11 +12,13 @@ export function TransactionContainer({
   title,
   type,
   items,
+  filteredItems,
   setItems,
   total,
   categories,
   setCategories,
   selectedCategories,
+  setSelectedCategories
 }) {
   const [isFormVisible, setIsFormVisible] = useState(false)
 
@@ -40,10 +42,12 @@ export function TransactionContainer({
         setCategories={setCategories}
         isFormVisible={isFormVisible} />
 
-      <ActiveFilters selectedCategories={selectedCategories} />
+      <ActiveFilters
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories} />
 
       <TransactionList
-        items={items}
+        items={filteredItems}
         type={type}
         categories={categories}
         setCategories={setCategories}

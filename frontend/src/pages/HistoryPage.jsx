@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import './HistoryPage.css'
@@ -21,23 +21,63 @@ export function HistoryPage({
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
 
 
-{/*  const [selectedCategories, setSelectedCategories] = useState(
-    categories.reduce((acc, category) => (
-      { ...acc, [category.name]: false }
-    ), {})
-  )*/}
 
   const [selectedCategories, setSelectedCategories] = useState(
     categories.map(cat => (
-      {name: cat.name, isChecked: false}
+      { id: cat.id, isChecked: false, name: cat.name }
     ))
   )
+
+
+  useEffect(() => {
+    setSelectedCategories(prev => (
+      categories.map(cat => {
+        const existing = prev.find(p => p.id === cat.id)
+        return existing || { id: cat.id, isChecked: false, name: cat.name }
+      })
+    ))
+  }, [categories])
+
+
+
 
   const [filters, setFilters] = useState({
     description: '',
     minAmount: '', maxAmount: '',
     startDate: '', endDate: '',
   })
+
+
+
+
+  const [filteredItems, setFilteredItems] = useState([])
+
+
+  useEffect(() => {
+    const description = filters.description
+    const minAmount = filters.minAmount
+    const maxAmount = filters.maxAmount
+    const startDate = filters.startDate
+    const endDate = filters.endDate
+
+    const checkedCategoryIds = selectedCategories
+      .filter(cat => cat.isChecked)
+      .map(cat => cat.id)
+    const noCategorySelected = checkedCategoryIds.length === 0
+
+
+    const filtered = items.filter(item => {
+      const categoryOk = noCategorySelected || checkedCategoryIds.includes(item.categoryId)
+      const descriptionOk = description === '' || item.description.includes(description)
+      const amountOk = (minAmount === '' || item.amount >= minAmount) && (maxAmount === '' || item.amount <= maxAmount)
+      const dateOk = (startDate === '' || item.date >= startDate) && (endDate === '' || item.date <= endDate)
+
+      return categoryOk && descriptionOk && amountOk && dateOk
+    })
+
+    setFilteredItems(filtered)
+  }, [filters, selectedCategories, items])
+
 
   return (
     <div className="history-page">
@@ -53,6 +93,7 @@ export function HistoryPage({
         title={title}
         type={type}
         items={items}
+        filteredItems={filteredItems}
         setItems={setItems}
         total={total}
         categories={categories}

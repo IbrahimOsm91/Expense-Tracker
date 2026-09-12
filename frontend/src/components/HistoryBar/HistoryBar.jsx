@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import './HistoryBar.css'
 
 
@@ -15,17 +16,16 @@ export function HistoryBar(
   }
 
 
-  function handleCategoryChange(name, isChecked) {
+  function handleCategoryChange(id, isChecked) {
     setSelectedCategories(prev => (
-      prev.map(cat => 
-        cat.name === name
+      prev.map(cat =>
+        cat.id === id
           ? { ...cat, isChecked: isChecked }
           : { ...cat }
       )
     ))
   }
 
-console.log(selectedCategories)
 
 
   return (
@@ -42,6 +42,7 @@ console.log(selectedCategories)
           value={filters.description}
           onChange={handleFilterChange} />
 
+        <h3>Amount range</h3>
         <div className="amount-range">
           <input type="number" placeholder="Min"
             name='minAmount'
@@ -53,6 +54,7 @@ console.log(selectedCategories)
             onChange={handleFilterChange} />
         </div>
 
+        <h3>Date range</h3>
         <div className="date-range">
           <input type="date" name='startDate' onChange={handleFilterChange} value={filters.startDate} />
           <input type="date" name='endDate' onChange={handleFilterChange} value={filters.endDate} />
@@ -64,8 +66,8 @@ console.log(selectedCategories)
             {categories.map(category => (
               <div key={category.name}>
                 <input type='checkbox'
-                  checked={selectedCategories.find(cat => cat.name === category.name)?.isChecked || false}
-                  onChange={(event) => handleCategoryChange(category.name, event.target.checked)} />
+                  checked={selectedCategories.find(cat => cat.id === category.id)?.isChecked || false}
+                  onChange={(event) => handleCategoryChange(category.id, event.target.checked)} />
                 {category.name}
               </div>
             ))}
@@ -76,7 +78,7 @@ console.log(selectedCategories)
       <div className='navigation-section'>
         <h2>Navigation</h2>
 
-        <button>Home Page</button>
+        <Link to='/'>Home Page</Link>
         <button>Other Page</button>
         <button>Other Page</button>
       </div>
