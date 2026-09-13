@@ -64,7 +64,7 @@ export function HistoryPage({
       .filter(cat => cat.isChecked)
       .map(cat => cat.id)
     const noCategorySelected = checkedCategoryIds.length === 0
-
+    
 
     const filtered = items.filter(item => {
       const categoryOk = noCategorySelected || checkedCategoryIds.includes(item.categoryId)

@@ -21,10 +21,21 @@ export function TransactionContainer({
   setSelectedCategories
 }) {
   const [isFormVisible, setIsFormVisible] = useState(false)
+  const [pageIndicator, setPageIndicator] = useState(1)
 
   useEffect(() => {
     localStorage.setItem(`${type}Categories`, JSON.stringify(categories))
   }, [categories])
+
+
+  function pageIndicatorPlus1() {
+    const lastPage = Math.ceil(filteredItems.length / 10)
+    setPageIndicator(prev => Math.min(lastPage, prev + 1))
+  }
+
+  function pageIndicatorMinus1() {
+    setPageIndicator(prev => Math.max(1, prev - 1))
+  }
 
 
   return (
@@ -51,7 +62,15 @@ export function TransactionContainer({
         type={type}
         categories={categories}
         setCategories={setCategories}
-        setItems={setItems} />
+        setItems={setItems}
+        selectedCategories={selectedCategories}
+        pageIndicator={(pageIndicator * 10)} />
+
+      <div className='transaction-list-pagination'>
+        <button onClick={pageIndicatorMinus1}><span>Previous</span></button>
+        <span>{pageIndicator}</span>
+        <button onClick={pageIndicatorPlus1}><span>Next</span></button>
+      </div>
     </div>
   )
 }
