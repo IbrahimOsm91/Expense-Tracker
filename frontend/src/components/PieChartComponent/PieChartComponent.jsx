@@ -1,11 +1,11 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo } from 'react'
 import './PieChartComponent.css'
 import { Link } from 'react-router-dom'
 
 const COLORS = ['#6C5CE7', '#00B894', '#FD79A8', '#636E72', '#0984E3', '#FDCB6E', '#E17055', '#00CEC9']
 
-export function PieChartComponent({
+export const PieChartComponent = memo(function PieChartComponent({
   total, categories, items, type, title
 }) {
   const [pieData, setPieData] = useState([])
@@ -98,4 +98,4 @@ export function PieChartComponent({
       </div>
     </div >
   )
-}
+})

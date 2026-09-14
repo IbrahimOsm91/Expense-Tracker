@@ -23,8 +23,9 @@ export function HomePage({
       <h1>Expense Tracker</h1>
 
       <div className='top-row'>
-        <h2 style={{ color: netBalance > 0 ? '#38d9a9' : '#f783ac' }}
-        >Net Balance: ${netBalance}</h2>
+        <h2>
+          Net Balance: <span style={{ color: netBalance > 0 ? '#38d9a9' : '#f783ac' }}>${netBalance}</span>
+        </h2>
 
         <QuickAdd
           quickAddType={quickAddType}

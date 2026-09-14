@@ -30,7 +30,7 @@ export function TransactionContainer({
 
   function pageIndicatorPlus1() {
     const lastPage = Math.ceil(filteredItems.length / 10)
-    setPageIndicator(prev => Math.min(lastPage, prev + 1))
+    setPageIndicator(prev => Math.min((lastPage || 1) , prev + 1))
   }
 
   function pageIndicatorMinus1() {
