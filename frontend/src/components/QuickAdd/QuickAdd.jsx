@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 import './QuickAdd.css'
 
 
-export function QuickAdd({quickAddType, setQuickAddType, categories, setCategories, items, setItems}) {
+export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategories, items, setItems }) {
   const [showDateTimeRow, setShowDateTimeRow] = useState(false)
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
 
@@ -39,26 +39,24 @@ export function QuickAdd({quickAddType, setQuickAddType, categories, setCategori
         ...previousCategories,
         newCategory
       ])
-
       selectedCategoryId = newCategory.id
     }
 
 
-    setItems([
-      {
-        description: newTransaction.description || 'Undefined',
-        amount: Number(newTransaction.amount) || 0,
-        categoryId: selectedCategoryId,
-        time: newTransaction.time === ''
-          ? dayjs().format('HH:mm')
-          : newTransaction.time,
-        date: newTransaction.date === ''
-          ? dayjs().format('YYYY-MM-DD')
-          : newTransaction.date,
-        id: crypto.randomUUID()
-      },
-      ...items
-    ])
+    setItems(prev => ([{
+      description: newTransaction.description || 'Undefined',
+      amount: Number(newTransaction.amount) || 0,
+      categoryId: selectedCategoryId,
+      time: newTransaction.time === ''
+        ? dayjs().format('HH:mm')
+        : newTransaction.time,
+      date: newTransaction.date === ''
+        ? dayjs().format('YYYY-MM-DD')
+        : newTransaction.date,
+      id: crypto.randomUUID()
+    },
+    ...prev
+    ]))
   }
 
   useEffect(() => {
