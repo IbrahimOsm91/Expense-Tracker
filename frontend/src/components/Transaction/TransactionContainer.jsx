@@ -37,6 +37,8 @@ export function TransactionContainer({
     setPageIndicator(prev => Math.max(1, prev - 1))
   }
 
+  useEffect(() => setPageIndicator(1) , [selectedCategories])
+
 
   return (
     <div className="transaction-container" data-type={type}>
