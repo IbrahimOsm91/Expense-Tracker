@@ -27,8 +27,7 @@ export function TransactionList({ items, type, categories, setCategories, setIte
         <span className="transaction-date">Date</span>
       </div>
 
-      {items.map((item, index) => {
-        if (index >= pageIndicator || (pageIndicator - 10) > index) { return }
+      {items.slice(pageIndicator - 10, pageIndicator).map(item => {
         return (
           <ItemComponent key={item.id}
             {...item}
