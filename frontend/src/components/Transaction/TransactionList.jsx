@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { ItemComponent } from '../ItemComponent/ItemComponent'
 
 export function TransactionList({ items, type, categories, setCategories, setItems, selectedCategories, pageIndicator }) {
-  const [filteredTotal, setFilteredTotal] = useState(0)
 
-  useEffect(() => {
+  const filteredTotal = useMemo(() => {
     const noCategorySelected = selectedCategories.every(cat => cat.isChecked === false)
 
     const total = items.reduce((acc, item) => {
@@ -12,9 +11,9 @@ export function TransactionList({ items, type, categories, setCategories, setIte
       const shouldInclude = noCategorySelected || matchedCategory?.isChecked
       return shouldInclude ? acc + item.amount : acc
     }, 0)
-
-    setFilteredTotal(total.toFixed(2))
+    return total.toFixed(2)
   }, [selectedCategories, items])
+
 
 
 
@@ -29,7 +28,7 @@ export function TransactionList({ items, type, categories, setCategories, setIte
       </div>
 
       {items.map((item, index) => {
-        if (index >= pageIndicator || (pageIndicator - 10) > index ) { return }
+        if (index >= pageIndicator || (pageIndicator - 10) > index) { return }
         return (
           <ItemComponent key={item.id}
             {...item}

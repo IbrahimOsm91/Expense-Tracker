@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import './HistoryPage.css'
@@ -48,12 +48,7 @@ export function HistoryPage({
   })
 
 
-
-
-  const [filteredItems, setFilteredItems] = useState([])
-
-
-  useEffect(() => {
+  const filteredItems = useMemo(() => {
     const description = filters.description
     const minAmount = filters.minAmount
     const maxAmount = filters.maxAmount
@@ -64,7 +59,7 @@ export function HistoryPage({
       .filter(cat => cat.isChecked)
       .map(cat => cat.id)
     const noCategorySelected = checkedCategoryIds.length === 0
-    
+
 
     const filtered = items.filter(item => {
       const categoryOk = noCategorySelected || checkedCategoryIds.includes(item.categoryId)
@@ -74,9 +69,9 @@ export function HistoryPage({
 
       return categoryOk && descriptionOk && amountOk && dateOk
     })
+    return filtered
+  }, [items, filters, selectedCategories])
 
-    setFilteredItems(filtered)
-  }, [filters, selectedCategories, items])
 
 
   return (

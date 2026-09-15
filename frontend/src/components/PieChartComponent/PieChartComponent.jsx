@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { useEffect, useState, memo } from 'react'
+import { memo, useMemo } from 'react'
 import './PieChartComponent.css'
 import { Link } from 'react-router-dom'
 
@@ -8,23 +8,24 @@ const COLORS = ['#6C5CE7', '#00B894', '#FD79A8', '#636E72', '#0984E3', '#FDCB6E'
 export const PieChartComponent = memo(function PieChartComponent({
   total, categories, items, type, title
 }) {
-  const [pieData, setPieData] = useState([])
 
-  function categoryFinder(catId) {
-    return categories.find(cat => cat.id === catId)
-  }
 
-  useEffect(() => {
+  const pieData = useMemo(() => {
     const categoryTotals = {}
+
+    function categoryFinder(catId) {
+      return categories.find(cat => cat.id === catId)
+    }
 
     categories.forEach((cat) => {
       categoryTotals[cat.name] = 0
     })
 
     items.forEach(item => {
-      const foundCategory = categoryFinder(item.categoryId)
-      if (!foundCategory) {return console.log('Category could not find!')}
-      categoryTotals[foundCategory.name] += item.amount
+      const matchedCategory = categoryFinder(item.categoryId)
+      if (!matchedCategory) { return console.log('Category could not find!') }
+
+      categoryTotals[matchedCategory.name] += item.amount
     })
 
     const chartData = Object.entries(categoryTotals).map(([name, value]) => {
@@ -34,23 +35,24 @@ export const PieChartComponent = memo(function PieChartComponent({
     chartData.sort((a, b) => b.value - a.value)
 
 
-
     if (chartData.length > 6) {
       const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
       const majorItems = chartData.filter((item) => (item.value / totalValue) >= 0.05)
       const minorItems = chartData.filter(item => (item.value / totalValue) < 0.05)
       const minorTotal = minorItems.reduce((sum, item) => sum + item.value, 0)
 
-      setPieData(
-        minorTotal > 0
-          ? [...majorItems, { name: 'Rest', value: minorTotal }]
-          : majorItems
-      )
-    } else if (!(chartData.length > 6)) {
-      setPieData(chartData)
-    }
+      return minorTotal > 0
+        ? [...majorItems, { name: 'Rest', value: minorTotal }]
+        : majorItems
 
+    } else if (chartData.length <= 6) {
+      return chartData
+    }
   }, [items, categories])
+
+
+
+
 
   return (
     <div className="pie-chart-container" data-section={type}>
