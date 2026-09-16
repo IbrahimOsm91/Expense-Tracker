@@ -123,14 +123,6 @@ function App() {
   }
 
 
-
-
-
-
-
-
-
-
   return (
     <Routes>
       <Route index element={<HomePage

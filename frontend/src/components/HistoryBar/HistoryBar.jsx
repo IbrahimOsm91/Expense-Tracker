@@ -79,8 +79,8 @@ export function HistoryBar(
         <h2>Navigation</h2>
 
         <Link to='/'>Home Page</Link>
-        <button>Other Page</button>
-        <button>Other Page</button>
+        <Link to='/history/income'>Income History</Link>
+        <Link to='/history/expense'>Expense History</Link>
       </div>
     </div>
   )

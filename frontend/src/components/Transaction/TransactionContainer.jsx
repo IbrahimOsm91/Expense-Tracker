@@ -37,7 +37,7 @@ export function TransactionContainer({
     setPageIndicator(prev => Math.max(1, prev - 1))
   }
 
-  useEffect(() => setPageIndicator(1) , [selectedCategories])
+  useEffect(() => setPageIndicator(1) , [filteredItems])
 
 
   return (

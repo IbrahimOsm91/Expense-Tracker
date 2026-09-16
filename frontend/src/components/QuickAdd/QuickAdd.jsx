@@ -61,12 +61,12 @@ export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategor
 
   useEffect(() => {
     localStorage.setItem(`${quickAddType}Categories`, JSON.stringify(categories))
-  }, [categories])
+  }, [categories, quickAddType])
 
   useEffect(() => {
     localStorage.setItem(quickAddType, JSON.stringify(items))
     setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-  }, [items])
+  }, [items, quickAddType])
 
 
 

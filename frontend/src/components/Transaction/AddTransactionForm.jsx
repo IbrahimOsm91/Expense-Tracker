@@ -70,7 +70,7 @@ export function AddTransactionForm({
   useEffect(() => {
     localStorage.setItem(type, JSON.stringify(items))
     setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-  }, [items])
+  }, [items, type])
 
   return (
     isFormVisible &&
