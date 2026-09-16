@@ -7,7 +7,7 @@ import './App.css'
 
 function App() {
 
-  function isValid(data) {
+  function isItemValid(data) {
     if (!Array.isArray(data)) return false
     const requiredProperties = ['description', 'amount', 'categoryId', 'time', 'date', 'id']
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/
@@ -45,11 +45,8 @@ function App() {
     }
 
 
-
-
     return data.every(item => {
-      if ((typeof item !== 'object') || (item === null)) return false
-
+      if (typeof item !== 'object' || item === null) return false
       if (Object.keys(item).length !== requiredProperties.length) return false
 
       return requiredProperties.every(property => {
@@ -66,10 +63,10 @@ function App() {
     })
   }
 
-  function getStoredData(list) {
+  function getStoredItemData(list) {
     try {
       const data = JSON.parse(localStorage.getItem(list))
-      if (!isValid(data)) {
+      if (!isItemValid(data)) {
         throw new Error(`${list} data is not valid`)
       }
       return data
@@ -79,21 +76,60 @@ function App() {
     }
   }
 
-  const [expenses, setExpenses] = useState(() => getStoredData('expense'))
-  const [incomes, setIncomes] = useState(() => getStoredData('income'))
+  const [expenses, setExpenses] = useState(() => getStoredItemData('expense'))
+  const [incomes, setIncomes] = useState(() => getStoredItemData('income'))
 
   const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
   const totalIncomes = incomes.reduce((acc, income) => acc + income.amount, 0)
 
   const [expenseCategories, setExpenseCategories] = useState(
-    JSON.parse(localStorage.getItem('expenseCategories'))
+    getStoredCategoryData('expenseCategories')
     || [{ id: '1', name: 'Market' }, { id: '2', name: 'Rent' }, { id: '3', name: 'Other' }]
   )
 
   const [incomeCategories, setIncomeCategories] = useState(
-    JSON.parse(localStorage.getItem('incomeCategories'))
+    getStoredCategoryData('incomeCategories')
     || [{ id: '1', name: 'Salary' }, { id: '2', name: 'Freelance' }, { id: '3', name: 'Other' }]
   )
+
+
+
+  function isCategoryValid(data) {
+    if (!Array.isArray(data)) return false
+    const requiredProperties = ['id', 'name']
+
+    return data.every(item => {
+      if (typeof item !== 'object' || item === null) return false
+      if (Object.keys(item).length !== requiredProperties.length) return false
+
+      return requiredProperties.every(property => (
+        (property in item) && (typeof item[property] === 'string') && (item[property].trim() !== '')
+      ))
+    })
+  }
+
+
+  function getStoredCategoryData(list) {
+    try {
+      const data = JSON.parse(localStorage.getItem(list))
+      if (!isCategoryValid(data)) {
+        throw new Error(`${list} data is not valid`)
+      }
+      return data
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
+
+
+
+
+
+
+
+
+
 
   return (
     <Routes>
