@@ -1,4 +1,4 @@
-
+import { useEffect } from "react"
 
 
 function isItemValid(data) {
@@ -97,4 +97,12 @@ export function getStoredCategoryData(list) {
     console.log(error)
     return false
   }
+}
+
+
+
+export function useLocalStorage(key, value) {
+  useEffect(() => {
+    localStorage.setItem(`${key}`, JSON.stringify(value))
+  }, [value, key])
 }
