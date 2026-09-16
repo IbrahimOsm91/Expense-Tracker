@@ -28,15 +28,18 @@ export function HistoryPage({
     ))
   )
 
+  const noCategorySelected = selectedCategories.every(cat => !cat.isChecked)
+
 
   useEffect(() => {
+    if (noCategorySelected) return
     setSelectedCategories(prev => (
       categories.map(cat => {
         const existing = prev.find(p => p.id === cat.id)
         return existing || { id: cat.id, isChecked: false, name: cat.name }
       })
     ))
-  }, [categories])
+  }, [categories, noCategorySelected])
 
 
 
@@ -58,7 +61,6 @@ export function HistoryPage({
     const checkedCategoryIds = selectedCategories
       .filter(cat => cat.isChecked)
       .map(cat => cat.id)
-    const noCategorySelected = checkedCategoryIds.length === 0
 
 
     const filtered = items.filter(item => {

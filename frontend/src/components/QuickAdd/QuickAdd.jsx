@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import dayjs from "dayjs"
 import './QuickAdd.css'
 
 
-export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategories, items, setItems }) {
+export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategories, setItems }) {
   const [showDateTimeRow, setShowDateTimeRow] = useState(false)
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
 
@@ -57,19 +57,10 @@ export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategor
     },
     ...prev
     ]))
-  }
 
-  useEffect(() => {
-    localStorage.setItem(`${quickAddType}Categories`, JSON.stringify(categories))
-  }, [categories, quickAddType])
-
-  useEffect(() => {
-    localStorage.setItem(quickAddType, JSON.stringify(items))
     setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-  }, [items, quickAddType])
 
-
-
+  }
 
 
   return (

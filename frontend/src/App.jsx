@@ -1,14 +1,14 @@
 import { HomePage } from './pages/HomePage'
 import { HistoryPage } from './pages/HistoryPage'
 import { Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getStoredCategoryData, getStoredItemData } from './utils/storage'
 import './App.css'
 
 
 function App() {
-  const [expenses, setExpenses] = useState(() => getStoredItemData('expense'))
-  const [incomes, setIncomes] = useState(() => getStoredItemData('income'))
+  const [expenses, setExpenses] = useState(() => getStoredItemData('expenses'))
+  const [incomes, setIncomes] = useState(() => getStoredItemData('incomes'))
 
   const [expenseCategories, setExpenseCategories] = useState(
     getStoredCategoryData('expenseCategories')
@@ -24,7 +24,21 @@ function App() {
   const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
   const totalIncomes = incomes.reduce((acc, income) => acc + income.amount, 0)
 
+  useEffect(() => {
+    localStorage.setItem('expenseCategories', JSON.stringify(expenseCategories))
+  }, [expenseCategories])
 
+  useEffect(() => {
+    localStorage.setItem('incomeCategories', JSON.stringify(incomeCategories))
+  }, [incomeCategories])
+
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses))
+  }, [expenses])
+
+  useEffect(() => {
+    localStorage.setItem('incomes', JSON.stringify(incomes))
+  }, [incomes])
 
   return (
     <Routes>

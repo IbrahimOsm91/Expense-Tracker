@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import dayjs from 'dayjs'
 
 export function AddTransactionForm({
   type,
-  items,
   setItems,
   categories,
   setCategories,
@@ -65,12 +64,10 @@ export function AddTransactionForm({
     },
     ...prev
     ]))
+
+    setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
   }
 
-  useEffect(() => {
-    localStorage.setItem(type, JSON.stringify(items))
-    setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-  }, [items, type])
 
   return (
     isFormVisible &&

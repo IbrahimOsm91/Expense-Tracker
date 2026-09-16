@@ -23,9 +23,6 @@ export function TransactionContainer({
   const [isFormVisible, setIsFormVisible] = useState(false)
   const [pageIndicator, setPageIndicator] = useState(1)
 
-  useEffect(() => {
-    localStorage.setItem(`${type}Categories`, JSON.stringify(categories))
-  }, [categories])
 
 
   function pageIndicatorPlus1() {
