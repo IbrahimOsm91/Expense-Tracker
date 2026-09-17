@@ -1,9 +1,15 @@
 import { useState } from "react"
-import dayjs from "dayjs"
+import { addTransaction } from "../../utils/addTransaction"
 import './QuickAdd.css'
 
 
-export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategories, setItems }) {
+export function QuickAdd({
+  quickAddType,
+  setQuickAddType,
+  categories,
+  setCategories,
+  setItems
+}) {
   const [showDateTimeRow, setShowDateTimeRow] = useState(false)
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
 
@@ -14,52 +20,6 @@ export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategor
       ...newTransaction,
       [name]: value
     })
-  }
-
-
-  function addTransaction() {
-    if (newTransaction.amount === '') {
-      alert('Please fill the informations!')
-      return
-    }
-
-    const categoryName = newTransaction.category.trim()
-    const existingCategory = categories.find(
-      category => category.name.toLowerCase() === categoryName.toLowerCase()
-    )
-    let selectedCategoryId = existingCategory?.id || '3'
-
-    if (categoryName !== '' && !existingCategory) {
-      const newCategory = {
-        id: crypto.randomUUID(),
-        name: categoryName
-      }
-
-      setCategories(previousCategories => [
-        ...previousCategories,
-        newCategory
-      ])
-      selectedCategoryId = newCategory.id
-    }
-
-
-    setItems(prev => ([{
-      description: newTransaction.description || 'Undefined',
-      amount: Number(newTransaction.amount) || 0,
-      categoryId: selectedCategoryId,
-      time: newTransaction.time === ''
-        ? dayjs().format('HH:mm')
-        : newTransaction.time,
-      date: newTransaction.date === ''
-        ? dayjs().format('YYYY-MM-DD')
-        : newTransaction.date,
-      id: crypto.randomUUID()
-    },
-    ...prev
-    ]))
-
-    setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-
   }
 
 
@@ -102,7 +62,7 @@ export function QuickAdd({ quickAddType, setQuickAddType, categories, setCategor
         <button type="button" className="add-datetime-btn"
           onClick={() => setShowDateTimeRow(!showDateTimeRow)}
         >+</button>
-        <button type="button" className="confirm-btn" onClick={addTransaction}>Confirm</button>
+        <button type="button" className="confirm-btn" onClick={() => addTransaction({newTransaction, setNewTransaction, categories, setCategories, setItems})}>Confirm</button>
       </div>
 
       <div className={`quick-add-row datetime-row ${showDateTimeRow ? '' : 'hidden'}`}>

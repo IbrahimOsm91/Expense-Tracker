@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import dayjs from 'dayjs'
+import { addTransaction } from '../../utils/addTransaction'
 
 export function AddTransactionForm({
   type,
@@ -10,6 +10,7 @@ export function AddTransactionForm({
 }) {
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
 
+  
   function handleChange(e) {
     const { name, value } = e.target
     setNewTransaction({
@@ -18,55 +19,6 @@ export function AddTransactionForm({
     })
   }
 
-  function getOrCreateCategoryId() {
-    const categoryName = newTransaction.category.trim()
-
-    // if the category input is empty, return the "Other" category ID.
-    if (categoryName === '') { return '3' }
-
-    const existingCategory = categories.find(
-      cat => cat.name.toLowerCase() === categoryName.toLowerCase()
-    )
-    if (existingCategory) { return existingCategory.id }
-
-    const newCategory = {
-      id: crypto.randomUUID(),
-      name: categoryName
-    }
-
-    setCategories(previousCategories => [
-      ...previousCategories,
-      newCategory
-    ])
-
-    return newCategory.id
-  }
-
-  function addTransaction() {
-    if (newTransaction.amount === '') {
-      alert('Please fill the informations!')
-      return
-    }
-
-    const selectedCategoryId = getOrCreateCategoryId()
-
-    setItems(prev => ([{
-      description: newTransaction.description || 'Undefined',
-      amount: Number(newTransaction.amount) || 0,
-      categoryId: selectedCategoryId || 'undefined',
-      time: newTransaction.time === ''
-        ? dayjs().format('HH:mm')
-        : newTransaction.time,
-      date: newTransaction.date === ''
-        ? dayjs().format('YYYY-MM-DD')
-        : newTransaction.date,
-      id: crypto.randomUUID()
-    },
-    ...prev
-    ]))
-
-    setNewTransaction({ description: '', amount: '', category: '', time: '', date: '' })
-  }
 
 
   return (
@@ -109,7 +61,7 @@ export function AddTransactionForm({
           value={newTransaction.date}
           onChange={handleChange} />
 
-        <button onClick={addTransaction}>Confirm</button>
+        <button onClick={() => addTransaction({newTransaction, setNewTransaction, categories, setCategories, setItems})}>Confirm</button>
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { getOrCreateCategoryId } from "../../utils/addTransaction"
 import dayjs from "dayjs"
 
 export function ItemComponent({
@@ -12,36 +13,6 @@ export function ItemComponent({
   const [editedTransaction, setEditedTransaction] = useState({
     description: description, amount: amount, category: category?.name || '', time: time, date: date, id: id
   })
-
-
-
-
-  function getOrCreateCategoryId() {
-    const categoryName = editedTransaction.category.trim()
-
-    // if the category input is empty, return the "Other" category ID.
-    if (categoryName === '') { return '3' }
-
-    const existingCategory = categories.find(
-      cat => cat.name.toLowerCase() === categoryName.toLowerCase()
-    )
-    if (existingCategory) { return existingCategory.id }
-
-    const newCategory = {
-      id: crypto.randomUUID(),
-      name: categoryName
-    }
-
-    setCategories(previousCategories => [
-      ...previousCategories,
-      newCategory
-    ])
-
-    return newCategory.id
-  }
-
-
-
 
 
   function editTransaction(event) {
@@ -64,7 +35,8 @@ export function ItemComponent({
   }
 
   function saveEdit() {
-    const selectedCategory = getOrCreateCategoryId()
+    // getOrCreateCategoryId expects a "newTransaction" key, so we map editedTransaction to it
+    const selectedCategory = getOrCreateCategoryId({newTransaction: editedTransaction, categories, setCategories})
 
     setItems((previousItems) => (
       previousItems.map(item => (
