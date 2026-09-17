@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { getStoredCategoryData, getStoredItemData, useLocalStorage } from './utils/storage'
 import './App.css'
+import { NotFound } from './pages/NotFoundPage'
 
 
 function App() {
@@ -54,6 +55,8 @@ function App() {
         setIncomeCategories={setIncomeCategories}
         totalExpenses={totalExpenses}
         totalIncomes={totalIncomes} />} />
+
+        <Route path="*"  element={<NotFound />}/>
     </Routes>
   )
 }

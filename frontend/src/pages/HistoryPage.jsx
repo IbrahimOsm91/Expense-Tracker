@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Navigate, useParams } from "react-router-dom"
 import { useState, useEffect, useMemo } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
@@ -12,12 +12,31 @@ export function HistoryPage({
   totalExpenses, totalIncomes
 }) {
   const { type } = useParams()
+  const isValidType = type === 'expense' || type === 'income'
 
-  const items = type === 'expense' ? expenses : incomes
-  const setItems = type === 'expense' ? setExpenses : setIncomes
-  const categories = type === 'expense' ? expenseCategories : incomeCategories
-  const setCategories = type === 'expense' ? setExpenseCategories : setIncomeCategories
-  const total = type === 'expense' ? totalExpenses : totalIncomes
+  const items = useMemo(() => {
+    if (!isValidType) return []
+    return type === 'expense' ? expenses : incomes
+
+  }, [isValidType, type, expenses, incomes])
+
+  const setItems = isValidType
+    ? (type === 'expense' ? setExpenses : setIncomes)
+    : () => { }
+
+  const categories = useMemo(() => {
+    if (!isValidType) return []
+    return type === 'expense' ? expenseCategories : incomeCategories
+  }, [isValidType, type, expenseCategories, incomeCategories])
+
+  const setCategories = isValidType
+    ? (type === 'expense' ? setExpenseCategories : setIncomeCategories)
+    : () => { }
+
+  const total = isValidType
+    ? (type === 'expense' ? totalExpenses : totalIncomes)
+    : 0
+
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
 
 
@@ -62,7 +81,6 @@ export function HistoryPage({
       .filter(cat => cat.isChecked)
       .map(cat => cat.id)
 
-
     const filtered = items.filter(item => {
       const categoryOk = noCategorySelected || checkedCategoryIds.includes(item.categoryId)
       const descriptionOk = description === '' || item.description.includes(description)
@@ -72,9 +90,11 @@ export function HistoryPage({
       return categoryOk && descriptionOk && amountOk && dateOk
     })
     return filtered
-  }, [items, filters, selectedCategories])
+  }, [items, filters, selectedCategories, noCategorySelected])
 
-
+  if (!isValidType) {
+    return <Navigate to="/not-found" />
+  }
 
   return (
     <div className="history-page">
