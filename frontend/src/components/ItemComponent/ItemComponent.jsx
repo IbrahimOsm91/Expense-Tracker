@@ -36,7 +36,11 @@ export function ItemComponent({
 
   function saveEdit() {
     // getOrCreateCategoryId expects a "newTransaction" key, so we map editedTransaction to it
-    const selectedCategory = getOrCreateCategoryId({newTransaction: editedTransaction, categories, setCategories})
+    if (editedTransaction.amount < 0 || editedTransaction.amount === '') {
+      alert('Please enter a valid amount!')
+      return
+    }
+    const selectedCategory = getOrCreateCategoryId({ newTransaction: editedTransaction, categories, setCategories })
 
     setItems((previousItems) => (
       previousItems.map(item => (

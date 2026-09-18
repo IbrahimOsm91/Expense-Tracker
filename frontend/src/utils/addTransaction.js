@@ -28,8 +28,8 @@ export function getOrCreateCategoryId({newTransaction, categories, setCategories
 
 export function addTransaction({ newTransaction, setNewTransaction, categories, setCategories, setItems }) {
 
-  if (newTransaction.amount === '') {
-    alert('Please fill the informations!')
+  if (newTransaction.amount < 0 || newTransaction.amount === '') {
+    alert('Please enter a valid amount!')
     return
   }
 

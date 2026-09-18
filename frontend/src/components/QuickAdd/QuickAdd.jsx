@@ -22,6 +22,15 @@ export function QuickAdd({
     })
   }
 
+  function applyAddTransaction() {
+    if (newTransaction.amount < 0 || newTransaction.amount === '') {
+      alert('Please enter a valid amount!')
+      return
+    }
+
+    addTransaction({ newTransaction, setNewTransaction, categories, setCategories, setItems })
+  }
+
 
   return (
     <div className="quick-add" data-section={quickAddType}>
@@ -59,10 +68,13 @@ export function QuickAdd({
           ))}
         </datalist>
 
-        <button type="button" className="add-datetime-btn"
+        <button type="button"
+          className="add-datetime-btn"
           onClick={() => setShowDateTimeRow(!showDateTimeRow)}
         >+</button>
-        <button type="button" className="confirm-btn" onClick={() => addTransaction({newTransaction, setNewTransaction, categories, setCategories, setItems})}>Confirm</button>
+        <button type="button"
+          className="confirm-btn"
+          onClick={applyAddTransaction}>Confirm</button>
       </div>
 
       <div className={`quick-add-row datetime-row ${showDateTimeRow ? '' : 'hidden'}`}>

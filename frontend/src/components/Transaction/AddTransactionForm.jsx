@@ -10,7 +10,7 @@ export function AddTransactionForm({
 }) {
   const [newTransaction, setNewTransaction] = useState({ description: '', amount: '', category: '', time: '', date: '' })
 
-  
+
   function handleChange(e) {
     const { name, value } = e.target
     setNewTransaction({
@@ -61,7 +61,11 @@ export function AddTransactionForm({
           value={newTransaction.date}
           onChange={handleChange} />
 
-        <button onClick={() => addTransaction({newTransaction, setNewTransaction, categories, setCategories, setItems})}>Confirm</button>
+        <button onClick={() => (
+          addTransaction({
+            newTransaction, setNewTransaction, categories, setCategories, setItems
+          })
+        )}>Confirm</button>
       </div>
     </div>
   )
