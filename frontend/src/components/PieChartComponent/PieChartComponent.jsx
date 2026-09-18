@@ -5,52 +5,50 @@ import { Link } from 'react-router-dom'
 
 const COLORS = ['#6C5CE7', '#00B894', '#FD79A8', '#636E72', '#0984E3', '#FDCB6E', '#E17055', '#00CEC9']
 
+function calculatePieData({categories, items}) {
+  const categoryTotals = {}
+
+  categories.forEach((cat) => {
+    categoryTotals[cat.name] = 0
+  })
+
+  items.forEach(item => {
+    const matchedCategory = categories.find(cat => cat.id === item.categoryId)
+    if (!matchedCategory) { return console.log('Category could not find!') }
+
+    categoryTotals[matchedCategory.name] += item.amount
+  })
+
+  const chartData = Object.entries(categoryTotals).map(([name, value]) => {
+    if (value > 0) { return { name, value } }
+  }).filter(i => i !== undefined)
+
+  chartData.sort((a, b) => b.value - a.value)
+
+
+  if (chartData.length > 6) {
+    const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
+    const majorItems = chartData.filter((item) => (item.value / totalValue) >= 0.05)
+    const minorItems = chartData.filter(item => (item.value / totalValue) < 0.05)
+    const minorTotal = minorItems.reduce((sum, item) => sum + item.value, 0)
+
+    return minorTotal > 0
+      ? [...majorItems, { name: 'Rest', value: minorTotal }]
+      : majorItems
+
+  } else if (chartData.length <= 6) {
+    return chartData
+  }
+}
+
 export const PieChartComponent = memo(function PieChartComponent({
   total, categories, items, type, title
 }) {
 
 
-  const pieData = useMemo(() => {
-    const categoryTotals = {}
-
-    function categoryFinder(catId) {
-      return categories.find(cat => cat.id === catId)
-    }
-
-    categories.forEach((cat) => {
-      categoryTotals[cat.name] = 0
-    })
-
-    items.forEach(item => {
-      const matchedCategory = categoryFinder(item.categoryId)
-      if (!matchedCategory) { return console.log('Category could not find!') }
-
-      categoryTotals[matchedCategory.name] += item.amount
-    })
-
-    const chartData = Object.entries(categoryTotals).map(([name, value]) => {
-      if (value > 0) { return { name, value } }
-    }).filter(i => i !== undefined)
-
-    chartData.sort((a, b) => b.value - a.value)
-
-
-    if (chartData.length > 6) {
-      const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
-      const majorItems = chartData.filter((item) => (item.value / totalValue) >= 0.05)
-      const minorItems = chartData.filter(item => (item.value / totalValue) < 0.05)
-      const minorTotal = minorItems.reduce((sum, item) => sum + item.value, 0)
-
-      return minorTotal > 0
-        ? [...majorItems, { name: 'Rest', value: minorTotal }]
-        : majorItems
-
-    } else if (chartData.length <= 6) {
-      return chartData
-    }
-  }, [items, categories])
-
-
+  const pieData = useMemo(() => (
+    calculatePieData({items, categories})
+  ), [items, categories])
 
 
 
