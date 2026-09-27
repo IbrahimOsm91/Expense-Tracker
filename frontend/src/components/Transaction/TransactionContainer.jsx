@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
-import { AddTransactionForm } from './AddTransactionForm'
+import { useState } from 'react'
+import { AddTransactionForm } from './AddTransactionForm/AddTransactionForm'
 import { ActiveFilters } from './ActiveFilters'
 import { TransactionList } from './TransactionList'
+import { Pagination } from './Pagination/Pagination'
 import './Transaction.css'
 
 
@@ -20,22 +21,8 @@ export function TransactionContainer({
   selectedCategories,
   setSelectedCategories
 }) {
-  const [isFormVisible, setIsFormVisible] = useState(false)
+  const [isFormVisible, setIsFormVisible] = useState(true)
   const [pageIndicator, setPageIndicator] = useState(1)
-
-
-
-  function pageIndicatorPlus1() {
-    const lastPage = Math.ceil(filteredItems.length / 10)
-    setPageIndicator(prev => Math.min((lastPage || 1) , prev + 1))
-  }
-
-  function pageIndicatorMinus1() {
-    setPageIndicator(prev => Math.max(1, prev - 1))
-  }
-
-  useEffect(() => setPageIndicator(1) , [filteredItems])
-
 
   return (
     <div className="transaction-container" data-type={type}>
@@ -65,11 +52,11 @@ export function TransactionContainer({
         selectedCategories={selectedCategories}
         pageIndicator={(pageIndicator * 10)} />
 
-      <div className='transaction-list-pagination'>
-        <button onClick={pageIndicatorMinus1}><span>Previous</span></button>
-        <span>{pageIndicator}</span>
-        <button onClick={pageIndicatorPlus1}><span>Next</span></button>
-      </div>
+      <Pagination
+        filteredItems={filteredItems}
+        pageIndicator={pageIndicator}
+        setPageIndicator={setPageIndicator} />
+
     </div>
   )
 }

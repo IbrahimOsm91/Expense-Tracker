@@ -1,0 +1,28 @@
+.transaction-list-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+
+
+.transaction-list-pagination button {
+  background: var(--accent-color);
+  color: #E8DCC4;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 13px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.transaction-list-pagination button:hover {
+  background-color: var(--accent-hover-color);
+}
+
+.transaction-list-pagination button:active {
+  background: #C49A45;
+  transform: scale(1.04);
+}

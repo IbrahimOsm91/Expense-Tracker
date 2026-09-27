@@ -1,3 +1,4 @@
+/* Transaction Container */
 .transaction-container {
   width: 70%;
   margin: 24px 50px;
@@ -5,16 +6,20 @@
   flex-direction: column;
 }
 
+
 .transaction-container[data-type="expense"] {
-  --accent-color: #f783ac;
+  --accent-color: #E11A45;
   --accent-hover-color: #e64980;
 }
 
+
 .transaction-container[data-type="income"] {
-  --accent-color: #38d9a9;
-  --accent-hover-color: #12b886;
+  --accent-color: #2A6B5C;
+  --accent-hover-color: #123F36;
 }
 
+
+/* Transaction Header */
 .transaction-header {
   display: flex;
   align-items: center;
@@ -22,9 +27,11 @@
   margin-bottom: 10px;
 }
 
+
 .transaction-header h2 {
   color: var(--accent-color);
 }
+
 
 .transaction-header button {
   background-color: var(--accent-color);
@@ -36,58 +43,28 @@
   cursor: pointer;
 }
 
+
 .transaction-header button:hover {
   background-color: var(--accent-hover-color);
 }
 
+
+/* Transaction List */
 .transaction-list {
   border: 2px solid var(--accent-color);
   border-radius: 12px;
   padding: 12px;
   color: #000;
+  margin-bottom: auto;
 }
 
-.add-transaction-form {
-  display: flex;
-  flex-direction: column;
+
+.transaction-list > :nth-child(even of .transaction-item) {
+  background-color: #E8DCC4;
 }
 
-.add-transaction-form div {
-  display: flex;
-  width: 100%;
-  gap: 8px;
-}
 
-.add-transaction-form input {
-  flex: 1;
-  font-size: 1rem;
-  padding: 8px 12px;
-  border: 2px solid var(--accent-color);
-  border-radius: 8px;
-  background-color: #faf6f0;
-  color: #000;
-}
-
-.add-transaction-form input:focus {
-  outline: none;
-  border-color: var(--accent-hover-color);
-}
-
-.add-transaction-form button {
-  background-color: var(--accent-color);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 1rem;
-  white-space: nowrap;
-}
-
-.add-transaction-form button:hover {
-  background-color: var(--accent-hover-color);
-}
-
+/* Transaction List Header & Items */
 .transaction-list-header,
 .transaction-item {
   display: grid;
@@ -96,30 +73,39 @@
   color: #000;
 }
 
+
 .transaction-list-header {
   font-weight: 700;
-  border-bottom: 3px dashed var(--accent-color);
+  background-color: var(--accent-color);
+  border-radius: 7px 7px 0 0;
+  color: #E8DCC4;
 }
 
+
+/* Transaction Content */
 .transaction-description {
   text-align: left;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.transaction-item>span {
+
+.transaction-item > span {
   border: 1px solid transparent;
   border-radius: 7px;
   padding: 2px 4px;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
-.transaction-item>span:hover {
+
+.transaction-item > span:hover {
   border-color: var(--accent-color);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-color) 18%, transparent);
   transform: scale(1.03);
 }
 
+
+/* Edit Buttons */
 .transaction-edit-btn {
   align-self: center;
   margin-left: 12px;
@@ -133,12 +119,14 @@
   line-height: 1;
 }
 
+
 .transaction-edit-actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
 }
+
 
 .transaction-edit-actions .transaction-edit-btn {
   width: 24px;
@@ -148,15 +136,19 @@
   font-size: 1rem;
 }
 
+
 .transaction-cancel-btn {
   color: var(--accent-hover-color);
 }
+
 
 .transaction-edit-btn:hover {
   background-color: var(--accent-color);
   color: #fff;
 }
 
+
+/* Transaction Fields */
 .transaction-amount,
 .transaction-time,
 .transaction-category,
@@ -167,12 +159,14 @@
 }
 
 
+/* Active Filters */
 .active-filters {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 5px;
 }
+
 
 .active-filters button {
   background-color: #EEF2FF;
@@ -184,12 +178,15 @@
   cursor: pointer;
 }
 
+
 .active-filters button:hover {
   background-color: #6366F1;
   color: #fff;
 }
 
 
+
+/* Transaction List Bottom */
 .transaction-list-bottom {
   display: flex;
   align-items: center;
@@ -197,63 +194,4 @@
   font-weight: 700;
   border-top: 3px dashed var(--accent-color);
   padding-top: 7px;
-}
-
-
-
-.transaction-list-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-
-
-
-/* From Uiverse.io by cssbuttons-io */ 
-.transaction-list-pagination button {
-  align-items: center;
-  background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-  border: 0;
-  border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-  box-sizing: border-box;
-  color: #ffffff;
-  display: flex;
-  font-size: 18px;
-  justify-content: center;
-  line-height: 1em;
-  max-width: 100%;
-  min-width: 140px;
-  padding: 3px;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.transaction-list-pagination button:active,
-.transaction-list-pagination button:hover {
-  outline: 0;
-}
-
-.transaction-list-pagination button span {
-  background-color: rgb(5, 6, 45);
-  padding: 16px 24px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
-  transition: 300ms;
-}
-
-.transaction-list-pagination button:hover span {
-  background: none;
-}
-
-.transaction-list-pagination button:active {
-  transform: scale(0.9);
 }
