@@ -56,6 +56,10 @@
   padding: 12px;
   color: #000;
   margin-bottom: auto;
+  overflow-y: auto;
+
+  /* [İz/Kaydırıcı Rengi] [Arka Plan Rengi] */
+  scrollbar-color: var(--accent-color) transparent;
 }
 
 
@@ -68,7 +72,7 @@
 .transaction-list-header,
 .transaction-item {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) repeat(4, minmax(0, 1fr)) 58px;
+  grid-template-columns: minmax(0, 0.4fr) minmax(0, 2fr) repeat(4, minmax(0, 1fr)) 58px;
   padding: 8px 4px;
   color: #000;
 }
@@ -84,7 +88,7 @@
 
 /* Transaction Content */
 .transaction-description {
-  text-align: left;
+  text-align: center;
   min-width: 0;
   overflow-wrap: anywhere;
 }
@@ -117,6 +121,7 @@
   cursor: pointer;
   font-size: 0.75rem;
   line-height: 1;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 
@@ -169,19 +174,20 @@
 
 
 .active-filters button {
-  background-color: #EEF2FF;
-  color: #6366F1;
-  border: 1px solid #6366F1;
+  background-color: #ebdcbe;
+  color: #C49A45;
+  border: 1.5px solid #C49A45;
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 0.85rem;
   cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 
 .active-filters button:hover {
-  background-color: #6366F1;
-  color: #fff;
+  background-color: #C49A45;
+  color: #ebdcbe;
 }
 
 

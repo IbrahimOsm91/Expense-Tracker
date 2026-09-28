@@ -20,6 +20,7 @@ export function TransactionList({ items, type, categories, setCategories, setIte
   return (
     <div className="transaction-list">
       <div className="transaction-list-header">
+        <span className='transaction-rank'>#Rank</span>
         <span className="transaction-description">Description</span>
         <span className="transaction-amount">Amount</span>
         <span className="transaction-category">Category</span>
@@ -28,13 +29,15 @@ export function TransactionList({ items, type, categories, setCategories, setIte
       </div>
 
       {items.slice(pageIndicator - 10, pageIndicator).map(item => {
+        const rank = items.findIndex(transaction => transaction.id === item.id) + 1
         return (
           <ItemComponent key={item.id}
             {...item}
             type={type}
             categories={categories}
             setCategories={setCategories}
-            setItems={setItems} />
+            setItems={setItems}
+            rank={rank} />
         )
       })}
 
