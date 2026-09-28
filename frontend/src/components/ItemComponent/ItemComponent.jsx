@@ -64,10 +64,25 @@ export function ItemComponent({
     setIsEditing(false)
   }
 
+  function deleteTransaction() {
+    if (!confirm('Are you sure you want to delete this transaction?')) {return}
+
+    setItems(previousItems => (
+      previousItems.filter(item => item.id !== id)
+    ))
+  }
+
 
   return (
     <div className="transaction-item">
-      <span>#{rank}</span>
+      {
+        isEditing
+          ? <button className="transaction-delete-btn"
+            onClick={deleteTransaction}>
+            Delete</button>
+          :<span>#{rank}</span>
+      }
+      
       {
         isEditing
           ? <input type="text" className="transaction-description"

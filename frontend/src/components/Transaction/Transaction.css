@@ -61,7 +61,7 @@
 }
 
 
-.transaction-list > :nth-child(even of .transaction-item) {
+.transaction-list> :nth-child(even of .transaction-item) {
   background-color: #E8DCC4;
 }
 
@@ -92,7 +92,7 @@
 }
 
 
-.transaction-item > span {
+.transaction-item>span {
   border: 1px solid transparent;
   border-radius: 7px;
   padding: 2px 4px;
@@ -100,7 +100,7 @@
 }
 
 
-.transaction-item > span:hover {
+.transaction-item>span:hover {
   border-color: var(--accent-color);
   box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-color) 18%, transparent);
   transform: scale(1.03);
@@ -131,7 +131,7 @@
 }
 
 
-.transaction-edit-actions .transaction-edit-btn {
+.transaction-edit-actions>button {
   width: 24px;
   height: 24px;
   margin-left: 0;
@@ -139,15 +139,28 @@
   font-size: 1rem;
 }
 
-
-.transaction-cancel-btn {
-  color: var(--accent-hover-color);
+.transaction-delete-btn {
+  width: 55px;
+  height: 24px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  background-color: #E11A45;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
+
 
 
 .transaction-edit-btn:hover {
   background-color: var(--accent-color);
   color: #fff;
+}
+
+.transaction-delete-btn:hover {
+  background-color: #fff;
+  color: #E11A45;
+  border-color: #E11A45;
 }
 
 
