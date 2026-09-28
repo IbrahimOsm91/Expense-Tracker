@@ -17,12 +17,12 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px 40px;
-  background-color: #F8FAFC;
+  background-color: #F5F5F5;
 }
 
 /* ---- H1 ---- */
 h1 {
-  color: #64748D;
+  color: #C49A45;
   border-radius: 16px;
   text-align: flex-start;
   font-size: 2rem;
@@ -32,7 +32,7 @@ h1 {
 /* ---- Net Balance ---- */
 .top-row h2 {
   text-align: center;
-  color: #0b1d5d;
+  color: #111;
   margin-bottom: 4px;
 }
 

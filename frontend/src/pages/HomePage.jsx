@@ -24,7 +24,7 @@ export function HomePage({
 
       <div className='top-row'>
         <h2>
-          Net Balance: <span style={{ color: netBalance > 0 ? '#38d9a9' : '#f783ac' }}>${netBalance}</span>
+          Net Balance: <span style={{ color: netBalance > 0 ? '#2A6B5C' : '#E11A45' }}>{netBalance < 0 ? `-$${Math.abs(netBalance)}` : `$${netBalance}`}</span>
         </h2>
 
         <QuickAdd

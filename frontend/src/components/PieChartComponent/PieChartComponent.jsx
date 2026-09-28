@@ -3,7 +3,16 @@ import { memo, useMemo } from 'react'
 import './PieChartComponent.css'
 import { Link } from 'react-router-dom'
 
-const COLORS = ['#6C5CE7', '#00B894', '#FD79A8', '#636E72', '#0984E3', '#FDCB6E', '#E17055', '#00CEC9']
+const COLORS = [
+  '#4F46E5', // Indigo
+  '#06B6D4', // Cyan
+  '#10B981', // Emerald
+  '#F59E0B', // Amber
+  '#EF4444', // Red
+  '#8B5CF6', // Violet
+  '#EC4899', // Pink
+  '#64748B'  // Slate
+]
 
 function calculatePieData({categories, items}) {
   const categoryTotals = {}
@@ -58,8 +67,8 @@ export const PieChartComponent = memo(function PieChartComponent({
         style={{
           color:
             type === 'expense'
-              ? '#e64980'
-              : '#38d9a9'
+              ? '#E11A45'
+              : '#2A6B5C'
         }}>
         {title}s: ${total}</span>
       <div className='pie-chart-body'>

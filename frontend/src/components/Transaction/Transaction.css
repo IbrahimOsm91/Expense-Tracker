@@ -57,8 +57,6 @@
   color: #000;
   margin-bottom: auto;
   overflow-y: auto;
-
-  /* [İz/Kaydırıcı Rengi] [Arka Plan Rengi] */
   scrollbar-color: var(--accent-color) transparent;
 }
 
