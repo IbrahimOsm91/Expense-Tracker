@@ -29,7 +29,8 @@ export function ItemComponent({
       amount,
       category: category?.name || '',
       time,
-      date
+      date,
+      id
     })
     setIsEditing(false)
   }
@@ -65,90 +66,92 @@ export function ItemComponent({
   }
 
   function deleteTransaction() {
-    if (!confirm('Are you sure you want to delete this transaction?')) {return}
+    if (!confirm('Are you sure you want to delete this transaction?')) { return }
 
     setItems(previousItems => (
       previousItems.filter(item => item.id !== id)
     ))
   }
 
+  
+
+  function renderNormalMode() {
+    return (
+      <>
+        <span>#{rank}</span>
+
+        <span className="transaction-description">{description}</span>
+
+        <span className="transaction-amount">${amount.toFixed(2)}</span>
+
+        <span className="transaction-category">{category?.name || 'undefined'}</span>
+
+        <span className="transaction-time">{time}</span>
+
+        <span className="transaction-date">{date}</span>
+
+        <button className="transaction-edit-btn"
+          onClick={() => setIsEditing(true)}>edit</button>
+      </>
+    )
+  }
+
+  function renderEditMode() {
+    return (
+      <>
+        <button className="transaction-delete-btn"
+          onClick={deleteTransaction}>
+          Delete
+        </button>
+
+        <input type="text" className="transaction-description"
+          name="description"
+          value={editedTransaction.description}
+          onChange={editTransaction} />
+
+        <input type="number" className="transaction-amount"
+          name="amount"
+          value={editedTransaction.amount}
+          onChange={editTransaction} />
+
+        <input type="text" className="transaction-category"
+          name="category"
+          list={`${type}-categories`}
+          value={editedTransaction.category}
+          onChange={editTransaction} />
+
+        <datalist id={`${type}-categories`}>
+          {categories.map(categoryOption => (
+            <option key={categoryOption.id} value={categoryOption.name} />
+          ))}
+        </datalist>
+
+        <input type="time" className="transaction-time"
+          name="time"
+          value={editedTransaction.time}
+          onChange={editTransaction} />
+
+        <input type="date" className="transaction-date"
+          name="date"
+          value={editedTransaction.date}
+          onChange={editTransaction} />
+
+        <div className="transaction-edit-actions">
+          <button className="transaction-edit-btn transaction-cancel-btn" onClick={cancelEdit} aria-label="Cancel edit">
+            ×
+          </button>
+          <button className="transaction-edit-btn transaction-save-btn" onClick={saveEdit} aria-label="Save edit">
+            ✓
+          </button>
+        </div>
+      </>
+    )
+  }
+
 
   return (
     <div className="transaction-item">
-      {
-        isEditing
-          ? <button className="transaction-delete-btn"
-            onClick={deleteTransaction}>
-            Delete</button>
-          :<span>#{rank}</span>
-      }
-      
-      {
-        isEditing
-          ? <input type="text" className="transaction-description"
-            name="description"
-            value={editedTransaction.description}
-            onChange={editTransaction} />
-          : <span className="transaction-description">{description}</span>
-      }
-
-      {
-        isEditing
-          ? <input type="number" className="transaction-amount"
-            name="amount"
-            value={editedTransaction.amount}
-            onChange={editTransaction} />
-          : <span className="transaction-amount">${amount.toFixed(2)}</span>
-      }
-
-      {
-        isEditing
-          ? <input type="text" className="transaction-category"
-            name="category"
-            list={`${type}-categories`}
-            value={editedTransaction.category}
-            onChange={editTransaction} />
-          : <span className="transaction-category">{category?.name || 'undefined'}</span>
-      }
-
-      {isEditing && <datalist id={`${type}-categories`}>
-        {categories.map(categoryOption => (
-          <option key={categoryOption.id} value={categoryOption.name} />
-        ))}
-      </datalist>}
-
-      {
-        isEditing
-          ? <input type="time" className="transaction-time"
-            name="time"
-            value={editedTransaction.time}
-            onChange={editTransaction} />
-          : <span className="transaction-time">{time}</span>
-      }
-
-      {
-        isEditing
-          ? <input type="date" className="transaction-date"
-            name="date"
-            value={editedTransaction.date}
-            onChange={editTransaction} />
-          : <span className="transaction-date">{date}</span>
-      }
-
-      {
-        isEditing
-          ? <div className="transaction-edit-actions">
-            <button className="transaction-edit-btn transaction-cancel-btn" onClick={cancelEdit} aria-label="Cancel edit">
-              ×
-            </button>
-            <button className="transaction-edit-btn transaction-save-btn" onClick={saveEdit} aria-label="Save edit">
-              ✓
-            </button>
-          </div>
-          : <button className="transaction-edit-btn" onClick={() => setIsEditing(true)}>
-            edit
-          </button>
-      }
+      {isEditing ? renderEditMode() : renderNormalMode()}
     </div>
   )
 }
