@@ -18,11 +18,9 @@ export function HistoryBar(
 
   function handleCategoryChange(id, isChecked) {
     setSelectedCategories(prev => (
-      prev.map(cat =>
-        cat.id === id
-          ? { ...cat, isChecked: isChecked }
-          : { ...cat }
-      )
+      isChecked
+        ? [...prev, id]
+        : prev.filter(categoryId => categoryId !== id)
     ))
   }
 
@@ -66,7 +64,7 @@ export function HistoryBar(
             {categories.map(category => (
               <div key={category.name}>
                 <input type='checkbox'
-                  checked={selectedCategories.find(cat => cat.id === category.id)?.isChecked || false}
+                  checked={selectedCategories.some(catId => catId === category.id)}
                   onChange={(event) => handleCategoryChange(category.id, event.target.checked)} />
                 {category.name}
               </div>

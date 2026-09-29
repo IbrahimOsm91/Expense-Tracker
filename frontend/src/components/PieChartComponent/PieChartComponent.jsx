@@ -1,7 +1,8 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { memo, useMemo } from 'react'
-import './PieChartComponent.css'
 import { Link } from 'react-router-dom'
+import { categoryFinder } from '../../utils/transactionHelpers'
+import './PieChartComponent.css'
 
 const COLORS = [
   '#4F46E5', // Indigo
@@ -14,7 +15,7 @@ const COLORS = [
   '#64748B'  // Slate
 ]
 
-function calculatePieData({categories, items}) {
+function calculatePieData({ categories, items }) {
   const categoryTotals = {}
 
   categories.forEach((cat) => {
@@ -22,7 +23,7 @@ function calculatePieData({categories, items}) {
   })
 
   items.forEach(item => {
-    const matchedCategory = categories.find(cat => cat.id === item.categoryId)
+    const matchedCategory = categoryFinder(categories, item.categoryId)
     if (!matchedCategory) { return console.log('Category could not find!') }
 
     categoryTotals[matchedCategory.name] += item.amount
@@ -56,7 +57,7 @@ export const PieChartComponent = memo(function PieChartComponent({
 
 
   const pieData = useMemo(() => (
-    calculatePieData({items, categories})
+    calculatePieData({ items, categories })
   ), [items, categories])
 
 

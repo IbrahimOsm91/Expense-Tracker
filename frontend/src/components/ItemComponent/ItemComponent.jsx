@@ -1,13 +1,12 @@
 import { useState } from "react"
 import { getOrCreateCategoryId } from "../../utils/addTransaction"
+import { categoryFinder } from "../../utils/transactionHelpers"
 import dayjs from "dayjs"
 
 export function ItemComponent({
   description, amount, time, categoryId, date, categories, type, setItems, id, setCategories, rank
 }) {
-  const category = categories.find(
-    cat => cat.id === categoryId
-  )
+  const category = categoryFinder(categories, categoryId)
 
   const [isEditing, setIsEditing] = useState(false)
   const [editedTransaction, setEditedTransaction] = useState({

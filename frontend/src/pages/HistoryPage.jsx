@@ -1,7 +1,8 @@
 import { Navigate, useParams } from "react-router-dom"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
+import { filterTransactions } from "../utils/transactionHelpers"
 import './HistoryPage.css'
 
 export function HistoryPage({
@@ -41,25 +42,7 @@ export function HistoryPage({
 
 
 
-  const [selectedCategories, setSelectedCategories] = useState(
-    categories.map(cat => (
-      { id: cat.id, isChecked: false, name: cat.name }
-    ))
-  )
-
-  const noCategorySelected = selectedCategories.every(cat => !cat.isChecked)
-
-
-  useEffect(() => {
-    if (noCategorySelected) return
-    setSelectedCategories(prev => (
-      categories.map(cat => {
-        const existing = prev.find(p => p.id === cat.id)
-        return existing || { id: cat.id, isChecked: false, name: cat.name }
-      })
-    ))
-  }, [categories, noCategorySelected])
-
+  const [selectedCategories, setSelectedCategories] = useState([])
 
 
 
@@ -71,26 +54,8 @@ export function HistoryPage({
 
 
   const filteredItems = useMemo(() => {
-    const description = filters.description
-    const minAmount = filters.minAmount
-    const maxAmount = filters.maxAmount
-    const startDate = filters.startDate
-    const endDate = filters.endDate
-
-    const checkedCategoryIds = selectedCategories
-      .filter(cat => cat.isChecked)
-      .map(cat => cat.id)
-
-    const filtered = items.filter(item => {
-      const categoryOk = noCategorySelected || checkedCategoryIds.includes(item.categoryId)
-      const descriptionOk = description === '' || item.description.includes(description)
-      const amountOk = (minAmount === '' || item.amount >= minAmount) && (maxAmount === '' || item.amount <= maxAmount)
-      const dateOk = (startDate === '' || item.date >= startDate) && (endDate === '' || item.date <= endDate)
-
-      return categoryOk && descriptionOk && amountOk && dateOk
-    })
-    return filtered
-  }, [items, filters, selectedCategories, noCategorySelected])
+    return filterTransactions({items, filters, selectedCategories})
+  }, [items, filters, selectedCategories])
 
   if (!isValidType) {
     return <Navigate to="/not-found" />

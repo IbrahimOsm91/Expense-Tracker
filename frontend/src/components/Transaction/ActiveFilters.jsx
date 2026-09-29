@@ -1,24 +1,21 @@
-export function ActiveFilters({ selectedCategories, setSelectedCategories }) {
+import { categoryFinder } from "../../utils/transactionHelpers"
+
+export function ActiveFilters({ selectedCategories, setSelectedCategories, categories }) {
 
 
   function removeCategoryFilter(categoryId) {
     setSelectedCategories(prev => (
-      prev.map(cat => (
-        cat.id === categoryId
-          ? { id: cat.id, isChecked: false, name: cat.name }
-          : { id: cat.id, isChecked: cat.isChecked, name: cat.name }
-      ))
+      prev.filter(catId => catId !== categoryId)
     ))
   }
 
   return (
     <div className='active-filters'>
-      {selectedCategories.map(cat => (
-        cat.isChecked && (
-          <button key={cat.id}
-            onClick={() => removeCategoryFilter(cat.id)}
-          >{cat.name} 🗙</button>
-        )
+      {selectedCategories.map(catId => (
+        <button key={catId}
+          onClick={() => removeCategoryFilter(catId)}
+        >{categoryFinder(categories, catId)?.name} 🗙
+        </button>
       ))}
     </div>
   )

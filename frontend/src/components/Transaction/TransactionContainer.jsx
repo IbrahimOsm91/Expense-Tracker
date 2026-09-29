@@ -41,7 +41,8 @@ export function TransactionContainer({
 
       <ActiveFilters
         selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories} />
+        setSelectedCategories={setSelectedCategories}
+        categories={categories} />
 
       <TransactionList
         items={filteredItems}

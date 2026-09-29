@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { categoryFinder } from '../../utils/transactionHelpers'
 import { ItemComponent } from '../ItemComponent/ItemComponent'
 
 export function TransactionList({ items, type, categories, setCategories, setItems, selectedCategories, pageIndicator }) {
@@ -7,7 +8,7 @@ export function TransactionList({ items, type, categories, setCategories, setIte
     const noCategorySelected = selectedCategories.every(cat => cat.isChecked === false)
 
     const total = items.reduce((acc, item) => {
-      const matchedCategory = selectedCategories.find(cat => cat.id === item.categoryId)
+      const matchedCategory = categoryFinder(selectedCategories, item.categoryId)
       const shouldInclude = noCategorySelected || matchedCategory?.isChecked
       return shouldInclude ? acc + item.amount : acc
     }, 0)
