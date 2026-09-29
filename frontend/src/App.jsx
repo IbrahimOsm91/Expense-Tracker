@@ -1,15 +1,22 @@
+import dayjs from "dayjs"
+import { Routes, Route, Form } from 'react-router-dom'
+import { useState } from 'react'
 import { HomePage } from './pages/HomePage'
 import { HistoryPage } from './pages/HistoryPage'
-import { Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
-import { getStoredCategoryData, getStoredItemData, useLocalStorage } from './utils/storage'
-import './App.css'
 import { NotFound } from './pages/NotFoundPage'
+import { getStoredCategoryData, getStoredItemData, useLocalStorage } from './utils/storage'
+import {getTotal, filterWithDate} from './utils/transactionHelpers'
+import './App.css'
+
 
 
 function App() {
+  const [date, setDate] = useState(dayjs())
   const [expenses, setExpenses] = useState(() => getStoredItemData('expenses'))
   const [incomes, setIncomes] = useState(() => getStoredItemData('incomes'))
+
+  const expensesOfMonth = filterWithDate(expenses, date)
+  const incomesOfMonth = filterWithDate(incomes, date)
 
   const [expenseCategories, setExpenseCategories] = useState(
     getStoredCategoryData('expenseCategories')
@@ -21,8 +28,11 @@ function App() {
     || [{ id: '1', name: 'Salary' }, { id: '2', name: 'Freelance' }, { id: '3', name: 'Other' }]
   )
 
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
-  const totalIncomes = incomes.reduce((acc, income) => acc + income.amount, 0)
+ 
+  const totalExpenses = getTotal(expenses)
+  const totalIncomes = getTotal(incomes) 
+  const totalExpensesOfMonth = getTotal(expensesOfMonth)
+  const totalIncomesOfMonth = getTotal(incomesOfMonth)
 
   useLocalStorage('expenses', expenses)
   useLocalStorage('incomes', incomes)
@@ -33,16 +43,18 @@ function App() {
   return (
     <Routes>
       <Route index element={<HomePage
-        expenses={expenses}
-        incomes={incomes}
+        expenses={expensesOfMonth}
+        incomes={incomesOfMonth}
         expenseCategories={expenseCategories}
         incomeCategories={incomeCategories}
         setExpenses={setExpenses}
         setIncomes={setIncomes}
         setExpenseCategories={setExpenseCategories}
         setIncomeCategories={setIncomeCategories}
-        totalExpenses={totalExpenses}
-        totalIncomes={totalIncomes} />} />
+        totalExpensesOfMonth={totalExpensesOfMonth}
+        totalIncomesOfMonth={totalIncomesOfMonth}
+        date={date}
+        setDate={setDate} />} />
 
       <Route path="/history/:type" element={<HistoryPage
         expenses={expenses}
