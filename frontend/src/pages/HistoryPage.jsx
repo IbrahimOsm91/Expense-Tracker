@@ -1,5 +1,5 @@
 import { Navigate, useParams } from "react-router-dom"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import { filterTransactions } from "../utils/transactionHelpers"
@@ -32,6 +32,16 @@ export function HistoryPage({
     startDate: '', endDate: '',
   })
 
+  useEffect(() => {
+    setFilters({
+      description: '',
+      minAmount: '', maxAmount: '',
+      startDate: '', endDate: '',
+    })
+
+    setSelectedCategories([])
+  }, [type])
+
 
   const filteredItems = useMemo(() => {
     return filterTransactions({ items, filters, selectedCategories })
@@ -61,6 +71,7 @@ export function HistoryPage({
         categories={categories}
         setCategories={setCategories}
         filters={filters}
+        setFilters={setFilters}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
       />

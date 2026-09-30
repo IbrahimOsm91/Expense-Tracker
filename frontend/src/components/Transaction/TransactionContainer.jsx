@@ -19,7 +19,9 @@ export function TransactionContainer({
   categories,
   setCategories,
   selectedCategories,
-  setSelectedCategories
+  setSelectedCategories,
+  filters,
+  setFilters
 }) {
   const [isFormVisible, setIsFormVisible] = useState(true)
   const [pageIndicator, setPageIndicator] = useState(1)
@@ -42,7 +44,9 @@ export function TransactionContainer({
       <ActiveFilters
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
-        categories={categories} />
+        categories={categories}
+        filters={filters}
+        setFilters={setFilters} />
 
       <TransactionList
         items={filteredItems}

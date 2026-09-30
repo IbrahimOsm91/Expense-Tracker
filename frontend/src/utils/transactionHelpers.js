@@ -19,7 +19,8 @@ export function filterTransactions({ items, filters, selectedCategories }) {
 
   const filtered = items.filter(item => {
     const categoryOk = noCategorySelected || selectedCategories.includes(item.categoryId)
-    const descriptionOk = description === '' || item.description.includes(description)
+    const descriptionOk = description === '' ||
+      item.description.toLowerCase().includes(description.toLowerCase())
     const amountOk = (minAmount === '' || item.amount >= minAmount) && (maxAmount === '' || item.amount <= maxAmount)
     const dateOk = (startDate === '' || item.date >= startDate) && (endDate === '' || item.date <= endDate)
 
