@@ -17,10 +17,9 @@ export function HomePage({
   const [quickAddType, setQuickAddType] = useState('expense')
   const netBalance = totalIncomesOfMonth - totalExpensesOfMonth
 
-  function dateCheck() {
-    return date.isSame(dayjs(), 'month')
-  }
-
+  const categories = quickAddType === 'expense' ? expenseCategories : incomeCategories
+  const setCategories = quickAddType === 'expense' ? setExpenseCategories : setIncomeCategories
+  const setItems = quickAddType === 'expense' ? setExpenses : setIncomes
 
 
   return (
@@ -29,9 +28,8 @@ export function HomePage({
         <h1>Expense Tracker</h1>
 
         <div className="date-selection-container">
-
           <button className="this-month-btn"
-            disabled={dateCheck()}
+            disabled={date.isSame(dayjs(), 'month')}
             onClick={() => setDate(dayjs())}
           >
             This Month
@@ -63,9 +61,9 @@ export function HomePage({
         <QuickAdd
           quickAddType={quickAddType}
           setQuickAddType={setQuickAddType}
-          categories={quickAddType === 'expense' ? expenseCategories : incomeCategories}
-          setCategories={quickAddType === 'expense' ? setExpenseCategories : setIncomeCategories}
-          setItems={quickAddType === 'expense' ? setExpenses : setIncomes} />
+          categories={categories}
+          setCategories={setCategories}
+          setItems={setItems} />
       </div>
 
       <div className="pie-charts-container">

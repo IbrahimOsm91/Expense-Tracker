@@ -15,36 +15,16 @@ export function HistoryPage({
   const { type } = useParams()
   const isValidType = type === 'expense' || type === 'income'
 
-  const items = useMemo(() => {
-    if (!isValidType) return []
-    return type === 'expense' ? expenses : incomes
+  const items = type === 'expense' ? expenses : incomes
+  const setItems = type === 'expense' ? setExpenses : setIncomes
 
-  }, [isValidType, type, expenses, incomes])
+  const categories = type === 'expense' ? expenseCategories : incomeCategories
+  const setCategories = type === 'expense' ? setExpenseCategories : setIncomeCategories
 
-  const setItems = isValidType
-    ? (type === 'expense' ? setExpenses : setIncomes)
-    : () => { }
-
-  const categories = useMemo(() => {
-    if (!isValidType) return []
-    return type === 'expense' ? expenseCategories : incomeCategories
-  }, [isValidType, type, expenseCategories, incomeCategories])
-
-  const setCategories = isValidType
-    ? (type === 'expense' ? setExpenseCategories : setIncomeCategories)
-    : () => { }
-
-  const total = isValidType
-    ? (type === 'expense' ? totalExpenses : totalIncomes)
-    : 0
-
+  const total = type === 'expense' ? totalExpenses : totalIncomes
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
 
-
-
   const [selectedCategories, setSelectedCategories] = useState([])
-
-
 
   const [filters, setFilters] = useState({
     description: '',
@@ -54,7 +34,7 @@ export function HistoryPage({
 
 
   const filteredItems = useMemo(() => {
-    return filterTransactions({items, filters, selectedCategories})
+    return filterTransactions({ items, filters, selectedCategories })
   }, [items, filters, selectedCategories])
 
   if (!isValidType) {
