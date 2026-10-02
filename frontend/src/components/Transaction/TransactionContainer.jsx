@@ -3,7 +3,9 @@ import { AddTransactionForm } from './AddTransactionForm/AddTransactionForm'
 import { ActiveFilters } from './ActiveFilters'
 import { TransactionList } from './TransactionList'
 import { Pagination } from './Pagination/Pagination'
+import { Highlights } from './Highlights/Highlights'
 import './Transaction.css'
+
 
 
 
@@ -21,7 +23,9 @@ export function TransactionContainer({
   selectedCategories,
   setSelectedCategories,
   filters,
-  setFilters
+  setFilters,
+  date,
+  lastMonthNet
 }) {
   const [isFormVisible, setIsFormVisible] = useState(true)
   const [pageIndicator, setPageIndicator] = useState(1)
@@ -33,13 +37,24 @@ export function TransactionContainer({
         <button onClick={() => { setIsFormVisible(!isFormVisible) }}>Add new {type} ▼</button>
       </div>
 
-      <AddTransactionForm
+      {/*      <AddTransactionForm
         type={type}
         items={items}
         setItems={setItems}
         categories={categories}
         setCategories={setCategories}
-        isFormVisible={isFormVisible} />
+        isFormVisible={isFormVisible} /> 
+*/}
+
+
+      <Highlights
+        items={items}
+        categories={categories}
+        type={type}
+        date={date}
+        lastMonthNet={lastMonthNet} />
+
+
 
       <ActiveFilters
         selectedCategories={selectedCategories}

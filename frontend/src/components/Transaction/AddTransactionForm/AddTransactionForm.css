@@ -1,7 +1,10 @@
-
 .add-transaction-form {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 4px 16px;
+  margin-bottom: 8px;
 }
 
 .add-transaction-form div {
@@ -38,4 +41,9 @@
 
 .add-transaction-form button:hover {
   background-color: var(--accent-hover-color);
+}
+
+
+.input-amount {
+  flex:0.1 !important;
 }

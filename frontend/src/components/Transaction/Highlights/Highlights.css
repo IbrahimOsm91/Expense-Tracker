@@ -1,0 +1,109 @@
+.highlights-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 14%;
+  border-radius: 8px;
+  margin: 18px 0px;
+}
+
+.highlights-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.highlights-track {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  gap: 30px;
+  transition: transform 0.7s;
+}
+
+.highlight-card {
+  display: flex;
+  height: 100%;
+  flex: 0 0 calc((100% - 60px) / 3);
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0px;
+  border-radius: 5px;
+  min-width: 0;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  box-sizing: border-box;
+}
+
+.highlight-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 65%;
+  background-color: transparent;
+  box-sizing: border-box;
+  width: 65%;
+}
+
+.highlight-details span {
+  white-space: nowrap;
+  width: 100%;
+  min-width: 0px;
+}
+
+.highlight-title {
+  font-size: 15px;
+}
+
+.highlight-value {
+  font-size: 21px;
+}
+
+.highlight-card img {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.highlights-container button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
+}
+
+
+.highest-category {
+  background-color: #dbece1;
+}
+
+.highest-item {
+  background-color: #f1f696;
+}
+
+.highest-day {
+  background-color: #cae3e5;
+}
+
+.highest-category img {
+  background-color: #507c54;
+}
+
+.highest-item img {
+  background-color: #dae24d;
+}
+
+.highest-day img {
+  background-color: #33a8b0;
+}

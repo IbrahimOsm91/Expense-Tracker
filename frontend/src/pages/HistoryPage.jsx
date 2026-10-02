@@ -5,12 +5,22 @@ import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import { filterTransactions } from "../utils/transactionHelpers"
 import './HistoryPage.css'
 
+  function getLastMonthItems(items, date) {
+    const lastMonth = date.subtract(1, 'month')
+    return items.filter(item => (
+      item.date >= lastMonth.startOf('month').format('YYYY-MM-DD')
+      &&
+      item.date <= lastMonth.endOf('month').format('YYYY-MM-DD')
+    ))
+  }
+
 export function HistoryPage({
   expenses, incomes,
   expenseCategories, incomeCategories,
   setExpenses, setIncomes,
   setExpenseCategories, setIncomeCategories,
-  totalExpenses, totalIncomes
+  totalExpenses, totalIncomes,
+  date
 }) {
   const { type } = useParams()
   const isValidType = type === 'expense' || type === 'income'
@@ -23,6 +33,16 @@ export function HistoryPage({
 
   const total = type === 'expense' ? totalExpenses : totalIncomes
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
+
+
+  const lastMonthExpenseTotals = getLastMonthItems(expenses, date).reduce((acc, item) => acc += item.amount, 0)
+  const lastMonthIncomeTotals = getLastMonthItems(incomes, date).reduce((acc, item) => acc += item.amount, 0)
+
+  const lastMonthNet = lastMonthIncomeTotals - lastMonthExpenseTotals
+
+
+
+
 
   const [selectedCategories, setSelectedCategories] = useState([])
 
@@ -74,6 +94,8 @@ export function HistoryPage({
         setFilters={setFilters}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
+        date={date}
+        lastMonthNet={lastMonthNet}
       />
     </div>
   )

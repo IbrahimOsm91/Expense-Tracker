@@ -24,7 +24,7 @@ export function AddTransactionForm({
 
   return (
     isFormVisible &&
-    <div className="add-item-form add-transaction-form">
+    <div className="add-transaction-form">
 
       <div>
         <input type="text"

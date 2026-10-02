@@ -66,7 +66,8 @@ function App() {
         setExpenseCategories={setExpenseCategories}
         setIncomeCategories={setIncomeCategories}
         totalExpenses={totalExpenses}
-        totalIncomes={totalIncomes} />} />
+        totalIncomes={totalIncomes}
+        date={date} />} />
 
         <Route path="*"  element={<NotFound />}/>
     </Routes>
