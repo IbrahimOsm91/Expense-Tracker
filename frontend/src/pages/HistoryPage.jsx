@@ -5,12 +5,12 @@ import { HistoryBar } from '../components/HistoryBar/HistoryBar'
 import { filterTransactions } from "../utils/transactionHelpers"
 import './HistoryPage.css'
 
-  function getLastMonthItems(items, date) {
-    const lastMonth = date.subtract(1, 'month')
+  function getLastMonthItems(items, today) {
+    const lastMonth = today.subtract(1, 'month')
     return items.filter(item => (
-      item.date >= lastMonth.startOf('month').format('YYYY-MM-DD')
+      item.today >= lastMonth.startOf('month').format('YYYY-MM-DD')
       &&
-      item.date <= lastMonth.endOf('month').format('YYYY-MM-DD')
+      item.today <= lastMonth.endOf('month').format('YYYY-MM-DD')
     ))
   }
 
@@ -20,7 +20,8 @@ export function HistoryPage({
   setExpenses, setIncomes,
   setExpenseCategories, setIncomeCategories,
   totalExpenses, totalIncomes,
-  date
+  netBalance,
+  today
 }) {
   const { type } = useParams()
   const isValidType = type === 'expense' || type === 'income'
@@ -35,8 +36,8 @@ export function HistoryPage({
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
 
 
-  const lastMonthExpenseTotals = getLastMonthItems(expenses, date).reduce((acc, item) => acc += item.amount, 0)
-  const lastMonthIncomeTotals = getLastMonthItems(incomes, date).reduce((acc, item) => acc += item.amount, 0)
+  const lastMonthExpenseTotals = getLastMonthItems(expenses, today).reduce((acc, item) => acc += item.amount, 0)
+  const lastMonthIncomeTotals = getLastMonthItems(incomes, today).reduce((acc, item) => acc += item.amount, 0)
 
   const lastMonthNet = lastMonthIncomeTotals - lastMonthExpenseTotals
 
@@ -94,8 +95,10 @@ export function HistoryPage({
         setFilters={setFilters}
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
-        date={date}
+        today={today}
+        expenses={expenses}
         lastMonthNet={lastMonthNet}
+        netBalance={netBalance}
       />
     </div>
   )

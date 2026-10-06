@@ -56,6 +56,37 @@ export function calculateCategoryTotals({ items, categories }) {
 }
 
 
+
+// Pasta grafiğinde gösterilecek veriyi gruplayıp küçük kategorileri "Rest" olarak birleştirir.
+// Groups pie chart data and combine small categories under "Rest".
+export function calculatePieData({ items, categories }) {
+  const categoryTotals = calculateCategoryTotals({ items, categories })
+
+  const chartData = Object.entries(categoryTotals)
+    .filter(([_, value]) => value > 0)
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value)
+
+  if (chartData.length <= 6) {
+    return chartData
+  }
+
+  const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
+  const majorItems = chartData.filter((item) => (item.value / totalValue) >= 0.05)
+  const minorItems = chartData.filter(item => (item.value / totalValue) < 0.05)
+  const minorTotal = minorItems.reduce((sum, item) => sum + item.value, 0)
+
+  return minorTotal > 0
+    ? [...majorItems, { name: 'Rest', value: minorTotal }]
+    : majorItems
+}
+
+
+export function categoryFinder(categories, id) {
+  return categories.find(category => category.id === id)
+}
+
+
 // Finds the category with the highest total amount and returns a summary message.
 export function getHighestCategoryMessage({ items, categories }) {
   const categoryTotals = calculateCategoryTotals({ items, categories })
@@ -89,34 +120,37 @@ export function getHighestDayMessage({ items }) {
   const highestDay = Object.entries(dates).reduce((acc, current) => current[1] > acc[1] ? current : acc, ['No item yet', 0])
   return highestDay[1] === 0
     ? 'No item yet'
-    : `${highestDay[0]}: $${highestDay[1]}`
+    : `${dayjs(highestDay[0]).format('MMM D')}: $${highestDay[1]}`
 }
 
-// Pasta grafiğinde gösterilecek veriyi gruplayıp küçük kategorileri "Rest" olarak birleştirir.
-// Groups pie chart data and combine small categories under "Rest".
-export function calculatePieData({ items, categories }) {
-  const categoryTotals = calculateCategoryTotals({ items, categories })
+export function getThisMonthItems({items, today}) {
+  return items.filter(item => (
+    item.date >= today.startOf('month').format('YYYY-MM-DD')
+    &&
+    item.date <= today.endOf('month').format('YYYY-MM-DD')
+  ))
+}
 
-  const chartData = Object.entries(categoryTotals)
-    .filter(([_, value]) => value > 0)
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value)
+export function getNoSpendDaysMessage({items, today}) {
+  const firstDay = today.startOf('month')
+  const noSpendDays = []
+  const spendDays = []
 
-  if (chartData.length <= 6) {
-    return chartData
+  items.forEach(item => {
+    if (item.amount === 0) return
+    if (spendDays.includes(item.date)) return
+    spendDays.push(item.date)
+  })
+
+  for (let i = 0; i < dayjs().date(); i++) {
+    const nextDay = firstDay.add(i, 'day').format('YYYY-MM-DD')
+    if (!spendDays.includes(nextDay)) {
+      noSpendDays.push(nextDay)
+    }
   }
+  
+  if (noSpendDays.length === 0) {return '0 days'}
+  if (noSpendDays.length === 1) {return `1 day (${dayjs(noSpendDays[0]).format('MMM D')})`}
 
-  const totalValue = chartData.reduce((sum, item) => sum + item.value, 0)
-  const majorItems = chartData.filter((item) => (item.value / totalValue) >= 0.05)
-  const minorItems = chartData.filter(item => (item.value / totalValue) < 0.05)
-  const minorTotal = minorItems.reduce((sum, item) => sum + item.value, 0)
-
-  return minorTotal > 0
-    ? [...majorItems, { name: 'Rest', value: minorTotal }]
-    : majorItems
-}
-
-
-export function categoryFinder(categories, id) {
-  return categories.find(category => category.id === id)
+  return noSpendDays.length + ' days'
 }

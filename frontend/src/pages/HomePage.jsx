@@ -12,10 +12,9 @@ export function HomePage({
   setExpenses, setIncomes,
   setExpenseCategories, setIncomeCategories,
   totalExpensesOfMonth, totalIncomesOfMonth,
-  date, setDate
+  netBalance, today, setToday
 }) {
   const [quickAddType, setQuickAddType] = useState('expense')
-  const netBalance = totalIncomesOfMonth - totalExpensesOfMonth
 
   const categories = quickAddType === 'expense' ? expenseCategories : incomeCategories
   const setCategories = quickAddType === 'expense' ? setExpenseCategories : setIncomeCategories
@@ -29,24 +28,24 @@ export function HomePage({
 
         <div className="date-selection-container">
           <button className="this-month-btn"
-            disabled={date.isSame(dayjs(), 'month')}
-            onClick={() => setDate(dayjs())}
+            disabled={today.isSame(dayjs(), 'month')}
+            onClick={() => setToday(dayjs())}
           >
             This Month
           </button>
 
           <button
-            onClick={() => setDate(pre => pre.subtract(1, "month"))}
+            onClick={() => setToday(pre => pre.subtract(1, "month"))}
           >
             {`↩`}
           </button>
 
-          <span>{date.startOf("month").format('YYYY-MM-DD')}</span>
+          <span>{today.startOf("month").format('YYYY-MM-DD')}</span>
           /
-          <span>{date.endOf("month").format('YYYY-MM-DD')}</span>
+          <span>{today.endOf("month").format('YYYY-MM-DD')}</span>
 
           <button
-            onClick={() => setDate(pre => pre.add(1, "month"))}
+            onClick={() => setToday(pre => pre.add(1, "month"))}
           >
             {`↪`}
           </button>

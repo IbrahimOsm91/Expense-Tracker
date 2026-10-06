@@ -4,7 +4,7 @@
   width: 100%;
   height: 14%;
   border-radius: 8px;
-  margin: 18px 0px;
+  margin: 11px 0px;
 }
 
 .highlights-viewport {
@@ -96,6 +96,19 @@
   background-color: #cae3e5;
 }
 
+.last-month-net {
+  background-color:#d1b681;
+}
+
+.net-balance {
+  background-color: #ffece3;
+}
+
+.no-spend-days {
+  background-color: #e6f7ec;
+}
+
+
 .highest-category img {
   background-color: #507c54;
 }
@@ -106,4 +119,17 @@
 
 .highest-day img {
   background-color: #33a8b0;
+}
+
+.last-month-net img {
+  background-color: #ba8b2d;
+}
+
+.net-balance img {
+  background-color: #e8590c;
+}
+
+
+.no-spend-days img {
+  background-color: #2e9e5b;
 }

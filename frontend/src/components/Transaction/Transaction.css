@@ -208,8 +208,14 @@
 .transaction-list-bottom {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   font-weight: 700;
   border-top: 3px dashed var(--accent-color);
   padding-top: 7px;
+}
+
+.transaction-list-bottom .highlights-note {
+  font-weight: 600;
+  font-size: 12px;
+  color: rgb(45, 44, 44);
 }

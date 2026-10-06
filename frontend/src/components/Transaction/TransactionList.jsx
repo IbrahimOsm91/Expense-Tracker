@@ -44,6 +44,7 @@ export function TransactionList({ items, type, categories, setCategories, setIte
 
       <div className='transaction-list-bottom' >
         <span className="transaction-total-amount">Total Amount: ${filteredTotal}</span>
+        <span className='highlights-note'>"Highlights are for this month only"</span>
       </div>
     </div>
   )

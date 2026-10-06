@@ -11,12 +11,12 @@ import './App.css'
 
 
 function App() {
-  const [date, setDate] = useState(dayjs())
+  const [today, setToday] = useState(dayjs())
   const [expenses, setExpenses] = useState(() => getStoredItemData('expenses'))
   const [incomes, setIncomes] = useState(() => getStoredItemData('incomes'))
 
-  const expensesOfMonth = filterWithDate(expenses, date)
-  const incomesOfMonth = filterWithDate(incomes, date)
+  const expensesOfMonth = filterWithDate(expenses, today)
+  const incomesOfMonth = filterWithDate(incomes, today)
 
   const [expenseCategories, setExpenseCategories] = useState(
     getStoredCategoryData('expenseCategories')
@@ -33,6 +33,7 @@ function App() {
   const totalIncomes = getTotal(incomes) 
   const totalExpensesOfMonth = getTotal(expensesOfMonth)
   const totalIncomesOfMonth = getTotal(incomesOfMonth)
+  const netBalance = totalIncomesOfMonth - totalExpensesOfMonth
 
   useLocalStorage('expenses', expenses)
   useLocalStorage('incomes', incomes)
@@ -53,8 +54,9 @@ function App() {
         setIncomeCategories={setIncomeCategories}
         totalExpensesOfMonth={totalExpensesOfMonth}
         totalIncomesOfMonth={totalIncomesOfMonth}
-        date={date}
-        setDate={setDate} />} />
+        netBalance={netBalance}
+        today={today}
+        setToday={setToday} />} />
 
       <Route path="/history/:type" element={<HistoryPage
         expenses={expenses}
@@ -67,7 +69,8 @@ function App() {
         setIncomeCategories={setIncomeCategories}
         totalExpenses={totalExpenses}
         totalIncomes={totalIncomes}
-        date={date} />} />
+        netBalance={netBalance}
+        today={today} />} />
 
         <Route path="*"  element={<NotFound />}/>
     </Routes>
