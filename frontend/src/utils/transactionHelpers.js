@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 
-// Date based filtering: returns transactions for the specified date.
-export function filterWithDate(items, date) {
+// Returns the items that belong to the same month and year as the given date.
+export function filterItemsByMonth(items, date) {
   return items.filter(item => dayjs(item.date).isSame(date, 'month'))
 }
 
@@ -10,8 +10,8 @@ export function getTotal(items) {
   return items.reduce((acc, item) => acc + item.amount, 0)
 }
 
-// Arama ve filtreleme kurallarını tek noktada toplar.
-// Consolidates search and filtering rules in a single place and filters the transactions.
+
+// Consolidates search and filtering rules in a single place and filters the transactions and sort them.
 export function filterTransactions({ items, filters, selectedCategories }) {
   const { description, minAmount, maxAmount, startDate, endDate } = filters
   const noCategorySelected = selectedCategories.length === 0
@@ -28,7 +28,7 @@ export function filterTransactions({ items, filters, selectedCategories }) {
     const dateOk = (startDate === '' || item.date >= startDate) && (endDate === '' || item.date <= endDate)
 
     return categoryOk && descriptionOk && amountOk && dateOk
-  })
+  }).sort((a, b) => b.date.localeCompare(a.date))
   return filtered
 }
 
@@ -57,7 +57,7 @@ export function calculateCategoryTotals({ items, categories }) {
 
 
 
-// Pasta grafiğinde gösterilecek veriyi gruplayıp küçük kategorileri "Rest" olarak birleştirir.
+
 // Groups pie chart data and combine small categories under "Rest".
 export function calculatePieData({ items, categories }) {
   const categoryTotals = calculateCategoryTotals({ items, categories })
@@ -123,7 +123,7 @@ export function getHighestDayMessage({ items }) {
     : `${dayjs(highestDay[0]).format('MMM D')}: $${highestDay[1]}`
 }
 
-export function getThisMonthItems({items, today}) {
+export function getThisMonthItems({ items, today }) {
   return items.filter(item => (
     item.date >= today.startOf('month').format('YYYY-MM-DD')
     &&
@@ -131,7 +131,8 @@ export function getThisMonthItems({items, today}) {
   ))
 }
 
-export function getNoSpendDaysMessage({items, today}) {
+// Finds the days with no expense and returns a summary message.
+export function getNoSpendDaysMessage({ items, today }) {
   const firstDay = today.startOf('month')
   const noSpendDays = []
   const spendDays = []
@@ -142,15 +143,21 @@ export function getNoSpendDaysMessage({items, today}) {
     spendDays.push(item.date)
   })
 
-  for (let i = 0; i < dayjs().date(); i++) {
+  for (let i = 0; i < today.date(); i++) {
     const nextDay = firstDay.add(i, 'day').format('YYYY-MM-DD')
     if (!spendDays.includes(nextDay)) {
       noSpendDays.push(nextDay)
     }
   }
-  
-  if (noSpendDays.length === 0) {return '0 days'}
-  if (noSpendDays.length === 1) {return `1 day (${dayjs(noSpendDays[0]).format('MMM D')})`}
+
+  if (noSpendDays.length === 0) { return '0 days' }
+  if (noSpendDays.length === 1) { return `1 day (${dayjs(noSpendDays[0]).format('MMM D')})` }
 
   return noSpendDays.length + ' days'
+}
+
+
+export function getLastMonthItems(items, today) {
+  const lastMonth = today.subtract(1, 'month')
+  return items.filter(item => dayjs(item.date).isSame(lastMonth, 'month'))
 }

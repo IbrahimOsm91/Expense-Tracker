@@ -2,24 +2,16 @@ import { Navigate, useParams } from "react-router-dom"
 import { useState, useMemo, useEffect } from "react"
 import { TransactionContainer } from "../components/Transaction/TransactionContainer"
 import { HistoryBar } from '../components/HistoryBar/HistoryBar'
-import { filterTransactions } from "../utils/transactionHelpers"
+import { filterTransactions, filterItemsByMonth, getLastMonthItems, getTotal } from "../utils/transactionHelpers"
 import './HistoryPage.css'
 
-  function getLastMonthItems(items, today) {
-    const lastMonth = today.subtract(1, 'month')
-    return items.filter(item => (
-      item.today >= lastMonth.startOf('month').format('YYYY-MM-DD')
-      &&
-      item.today <= lastMonth.endOf('month').format('YYYY-MM-DD')
-    ))
-  }
+
 
 export function HistoryPage({
   expenses, incomes,
   expenseCategories, incomeCategories,
   setExpenses, setIncomes,
   setExpenseCategories, setIncomeCategories,
-  totalExpenses, totalIncomes,
   netBalance,
   today
 }) {
@@ -32,8 +24,8 @@ export function HistoryPage({
   const categories = type === 'expense' ? expenseCategories : incomeCategories
   const setCategories = type === 'expense' ? setExpenseCategories : setIncomeCategories
 
-  const total = type === 'expense' ? totalExpenses : totalIncomes
   const title = type === 'expense' ? 'Expenses' : 'Incomes'
+  const totalOfMonth = getTotal(filterItemsByMonth(items, today))
 
 
   const lastMonthExpenseTotals = getLastMonthItems(expenses, today).reduce((acc, item) => acc += item.amount, 0)
@@ -85,10 +77,9 @@ export function HistoryPage({
       <TransactionContainer
         title={title}
         type={type}
-        items={items}
         filteredItems={filteredItems}
         setItems={setItems}
-        total={total}
+        totalOfMonth={totalOfMonth}
         categories={categories}
         setCategories={setCategories}
         filters={filters}

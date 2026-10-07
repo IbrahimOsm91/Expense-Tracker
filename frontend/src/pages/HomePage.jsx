@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { QuickAdd } from '../components/QuickAdd/QuickAdd'
 import { PieChartComponent } from '../components/PieChartComponent/PieChartComponent'
-import dayjs from "dayjs"
+import { MonthSelection } from "../components/MonthSelection/MonthSelection"
 
 
 
@@ -26,30 +26,9 @@ export function HomePage({
       <div className="first-row">
         <h1>Expense Tracker</h1>
 
-        <div className="date-selection-container">
-          <button className="this-month-btn"
-            disabled={today.isSame(dayjs(), 'month')}
-            onClick={() => setToday(dayjs())}
-          >
-            This Month
-          </button>
-
-          <button
-            onClick={() => setToday(pre => pre.subtract(1, "month"))}
-          >
-            {`↩`}
-          </button>
-
-          <span>{today.startOf("month").format('YYYY-MM-DD')}</span>
-          /
-          <span>{today.endOf("month").format('YYYY-MM-DD')}</span>
-
-          <button
-            onClick={() => setToday(pre => pre.add(1, "month"))}
-          >
-            {`↪`}
-          </button>
-        </div>
+        <MonthSelection
+          today={today}
+          setToday={setToday} />
       </div>
 
       <div className='second-row'>

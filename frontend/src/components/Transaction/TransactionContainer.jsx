@@ -16,7 +16,7 @@ export function TransactionContainer({
   type,
   filteredItems,
   setItems,
-  total,
+  totalOfMonth,
   categories,
   setCategories,
   selectedCategories,
@@ -28,25 +28,23 @@ export function TransactionContainer({
   netBalance,
   expenses
 }) {
-  const [isFormVisible, setIsFormVisible] = useState(true)
+  const [isFormVisible, setIsFormVisible] = useState(false)
   const [pageIndicator, setPageIndicator] = useState(1)
 
   return (
     <div className="transaction-container" data-type={type}>
       <div className="transaction-header">
-        <h2>{title}: ${total}</h2>
+        <h2>{title}: ${totalOfMonth}</h2>
 
         <button onClick={() => { setIsFormVisible(!isFormVisible) }}>Add new {type} ▼</button>
       </div>
 
-      {/*      <AddTransactionForm
+      <AddTransactionForm
         type={type}
-        items={items}
         setItems={setItems}
         categories={categories}
         setCategories={setCategories}
-        isFormVisible={isFormVisible} /> 
-*/}
+        isFormVisible={isFormVisible} />
 
       <Highlights
         items={expenses}

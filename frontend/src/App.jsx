@@ -1,11 +1,11 @@
 import dayjs from "dayjs"
-import { Routes, Route, Form } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { HomePage } from './pages/HomePage'
 import { HistoryPage } from './pages/HistoryPage'
 import { NotFound } from './pages/NotFoundPage'
 import { getStoredCategoryData, getStoredItemData, useLocalStorage } from './utils/storage'
-import {getTotal, filterWithDate} from './utils/transactionHelpers'
+import {getTotal, filterItemsByMonth} from './utils/transactionHelpers'
 import './App.css'
 
 
@@ -15,8 +15,8 @@ function App() {
   const [expenses, setExpenses] = useState(() => getStoredItemData('expenses'))
   const [incomes, setIncomes] = useState(() => getStoredItemData('incomes'))
 
-  const expensesOfMonth = filterWithDate(expenses, today)
-  const incomesOfMonth = filterWithDate(incomes, today)
+  const expensesOfMonth = filterItemsByMonth(expenses, today)
+  const incomesOfMonth = filterItemsByMonth(incomes, today)
 
   const [expenseCategories, setExpenseCategories] = useState(
     getStoredCategoryData('expenseCategories')
@@ -29,8 +29,6 @@ function App() {
   )
 
  
-  const totalExpenses = getTotal(expenses)
-  const totalIncomes = getTotal(incomes) 
   const totalExpensesOfMonth = getTotal(expensesOfMonth)
   const totalIncomesOfMonth = getTotal(incomesOfMonth)
   const netBalance = totalIncomesOfMonth - totalExpensesOfMonth
@@ -67,8 +65,6 @@ function App() {
         setIncomes={setIncomes}
         setExpenseCategories={setExpenseCategories}
         setIncomeCategories={setIncomeCategories}
-        totalExpenses={totalExpenses}
-        totalIncomes={totalIncomes}
         netBalance={netBalance}
         today={today} />} />
 
