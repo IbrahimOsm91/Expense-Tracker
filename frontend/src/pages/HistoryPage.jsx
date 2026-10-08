@@ -29,8 +29,8 @@ export function HistoryPage({
   const totalOfMonth = getTotal(filterItemsByMonth({items, date: today}))
 
 
-  const lastMonthExpenseTotals = filterItemsByMonth({ expenses, date: today.subtract(1, 'month') }).reduce((acc, item) => acc += item.amount, 0)
-  const lastMonthIncomeTotals = filterItemsByMonth({ incomes, date: today.subtract(1, 'month') }).reduce((acc, item) => acc += item.amount, 0)
+  const lastMonthExpenseTotals = filterItemsByMonth({ items: expenses, date: today.subtract(1, 'month') }).reduce((acc, item) => acc += item.amount, 0)
+  const lastMonthIncomeTotals = filterItemsByMonth({ items: incomes, date: today.subtract(1, 'month') }).reduce((acc, item) => acc += item.amount, 0)
 
   const lastMonthNet = lastMonthIncomeTotals - lastMonthExpenseTotals
 

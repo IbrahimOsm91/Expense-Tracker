@@ -57,7 +57,7 @@ export function ItemComponent({
               : editedTransaction.date,
             id: id
           }
-          : { ...item }
+          : item
       ))
     ))
 
