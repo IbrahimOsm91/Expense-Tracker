@@ -2,9 +2,8 @@ import {
   getHighestCategoryMessage,
   getHighestDayMessage,
   getHighestItemMessage,
-  getNoSpendDaysMessage,
-  getThisMonthItems
-} from '../../../utils/transactionHelpers'
+  getNoSpendDaysMessage
+} from '../../../utils/transactionSummaries'
 
 import shoppingBag from '../../../assets/shopping-bag.png'
 import fire from '../../../assets/fire.png'
@@ -14,6 +13,7 @@ import noSpendDays from '../../../assets/no-spend-days.png'
 import netBalanceImg from '../../../assets/net-balance.png'
 import './Highlights.css'
 import { useEffect, useRef } from 'react'
+import { filterItemsByMonth } from '../../../utils/transactionFilters'
 
 
 export function Highlights({
@@ -24,7 +24,7 @@ export function Highlights({
   netBalance
 }) {
 
-  items = getThisMonthItems({ items, today })
+  items = filterItemsByMonth({items, date: today})
 
 
   const categoryRef = useRef(null)

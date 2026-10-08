@@ -5,7 +5,8 @@ import { HomePage } from './pages/HomePage'
 import { HistoryPage } from './pages/HistoryPage'
 import { NotFound } from './pages/NotFoundPage'
 import { getStoredCategoryData, getStoredItemData, useLocalStorage } from './utils/storage'
-import {getTotal, filterItemsByMonth} from './utils/transactionHelpers'
+import { getTotal } from './utils/transactionCalculations'
+import { filterItemsByMonth } from './utils/transactionFilters'
 import './App.css'
 
 
@@ -15,16 +16,16 @@ function App() {
   const [expenses, setExpenses] = useState(() => getStoredItemData('expenses'))
   const [incomes, setIncomes] = useState(() => getStoredItemData('incomes'))
 
-  const expensesOfMonth = filterItemsByMonth(expenses, today)
-  const incomesOfMonth = filterItemsByMonth(incomes, today)
+  const expensesOfMonth = filterItemsByMonth({ items: expenses, date: today })
+  const incomesOfMonth = filterItemsByMonth({ items: incomes, date: today })
 
   const [expenseCategories, setExpenseCategories] = useState(
-    getStoredCategoryData('expenseCategories')
+    () => getStoredCategoryData('expenseCategories')
     || [{ id: '1', name: 'Market' }, { id: '2', name: 'Rent' }, { id: '3', name: 'Other' }]
   )
 
   const [incomeCategories, setIncomeCategories] = useState(
-    getStoredCategoryData('incomeCategories')
+    () => getStoredCategoryData('incomeCategories')
     || [{ id: '1', name: 'Salary' }, { id: '2', name: 'Freelance' }, { id: '3', name: 'Other' }]
   )
 

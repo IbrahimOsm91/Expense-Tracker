@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { categoryFinder } from '../../utils/transactionHelpers'
+import { categoryFinder } from '../../utils/transactionCalculations'
 import { ItemComponent } from '../ItemComponent/ItemComponent'
 
 export function TransactionList({ items, type, categories, setCategories, setItems, selectedCategories, pageIndicator }) {

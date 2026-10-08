@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { addTransaction } from '../../../utils/addTransaction'
-import "./addTransactionForm.css"
+import "./AddTransactionForm.css"
 
 export function AddTransactionForm({
   type,

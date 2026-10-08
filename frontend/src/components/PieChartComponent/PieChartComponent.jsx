@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { memo, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { calculatePieData } from '../../utils/transactionHelpers'
+import { calculatePieData } from '../../utils/transactionCalculations'
 import './PieChartComponent.css'
 
 const COLORS = [

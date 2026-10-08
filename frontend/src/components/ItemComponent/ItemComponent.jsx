@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { getOrCreateCategoryId } from "../../utils/addTransaction"
-import { categoryFinder } from "../../utils/transactionHelpers"
+import { categoryFinder } from "../../utils/transactionCalculations"
 import dayjs from "dayjs"
 
 export function ItemComponent({

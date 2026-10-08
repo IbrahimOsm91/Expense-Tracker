@@ -1,4 +1,4 @@
-import { categoryFinder } from "../../utils/transactionHelpers"
+import { categoryFinder } from "../../utils/transactionCalculations"
 
 const filterLabels = {
   description: 'Description',
