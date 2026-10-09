@@ -1,21 +1,9 @@
-import { useMemo } from 'react'
-import { categoryFinder } from '../../utils/transactionCalculations'
 import { ItemComponent } from '../ItemComponent/ItemComponent'
+import { getTotal } from '../../utils/transactionCalculations'
 
-export function TransactionList({ items, type, categories, setCategories, setItems, selectedCategories, pageIndicator }) {
+export function TransactionList({ items, type, categories, setCategories, setItems, pageIndicator }) {
 
-  const filteredTotal = useMemo(() => {
-    const noCategorySelected = selectedCategories.every(cat => cat.isChecked === false)
-
-    const total = items.reduce((acc, item) => {
-      const matchedCategory = categoryFinder(selectedCategories, item.categoryId)
-      const shouldInclude = noCategorySelected || matchedCategory?.isChecked
-      return shouldInclude ? acc + item.amount : acc
-    }, 0)
-    return total.toFixed(2)
-  }, [selectedCategories, items])
-
-
+const filteredTotal = getTotal(items).toFixed(2)
 
 
   return (

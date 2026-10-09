@@ -68,7 +68,6 @@ export function TransactionContainer({
         categories={categories}
         setCategories={setCategories}
         setItems={setItems}
-        selectedCategories={selectedCategories}
         pageIndicator={(pageIndicator * 10)} />
 
       <Pagination

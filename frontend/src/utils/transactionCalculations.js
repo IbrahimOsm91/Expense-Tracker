@@ -1,3 +1,4 @@
+import { filterItemsByMonth } from "./transactionFilters"
 
 
 
@@ -56,4 +57,15 @@ export function calculatePieData({ items, categories }) {
   return minorTotal > 0
     ? [...majorItems, { name: 'Rest', value: minorTotal }]
     : majorItems
+}
+
+
+
+
+// Calculates net balance (incomes minus expenses) for the given month
+export function calculateNetBalanceByMonth({ incomes, expenses, date }) {
+  const incomeTotal = getTotal(filterItemsByMonth({ items: incomes, date }))
+  const expenseTotal = getTotal(filterItemsByMonth({ items: expenses, date }))
+
+  return incomeTotal - expenseTotal
 }
